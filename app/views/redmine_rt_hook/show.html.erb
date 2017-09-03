@@ -1,0 +1,28 @@
+
+<script type="text/javascript">
+
+(function() {
+  console.log("p1");
+	if(window.location.pathname.indexOf("/issues/") >= 0) {
+		this.App = {};
+     console.log("p2");
+
+
+		App.cable = ActionCable.createConsumer();
+
+    console.log("creating subscription for MessagesChannel");
+		App.messages = App.cable.subscriptions.create('MessagesChannel', {
+			received: function(data) {
+				console.log("got message");
+				console.dir(data);
+			}
+		});
+    console.log("finished");
+    console.dir(App.messages);
+	} else {
+     console.log("p3");
+  }
+
+}).call(this);
+
+</script>

@@ -1,0 +1,65 @@
+2017/09/03 takeshi:
+
+Here is how redmine was installed on Ubuntu 14.04 Desktop for development:
+
+export RAILS_ENV=development
+apt-get install -y mysql-server
+mysql -u root -p -e "CREATE DATABASE redmine_development CHARACTER SET utf8; CREATE USER 'redmine'@'localhost' IDENTIFIED BY 'redmine'; GRANT ALL PRIVILEGES ON redmine_development.* TO 'redmine'@'localhost';"
+
+cd src/git
+git clone https://github.com/redmine/redmine
+cd redmine
+# redmine commit 6455e0431f04441a8833f100b35f8d9741292185
+
+
+cp config/database.yml.example config/database.yml
+
+sed -i 's/username: root/username: redmine/g' config/database.yml
+
+sed -i 's/password: ""/password: redmine/g' config/database.yml
+
+sudo -E apt-add-repository ppa:brightbox/ruby-ng
+sudo apt-get update
+sudo -E apt-get install -y ruby2.4 ruby2.4-dev
+
+sudo apt-get install -y imagemagick
+sudo apt-get install -y libmagickcore5
+sudo apt-get install -y libmagickcore-dev
+sudo apt-get install -y libmagickwand-dev
+
+sudo -E gem install rmagick -v '2.16.0'
+
+sudo -E gem install bundler
+
+bundle install # input sudo password when asked.
+
+bundle exec rake generate_secret_token
+
+bundle exec rake db:migrate
+
+REDMINE_LANG=en bundle exec rake redmine:load_default_data
+
+sudo useradd redmine -U
+
+sudo mkdir -p tmp tmp/pdf public/plugin_assets
+sudo chown -R redmine:redmine files log tmp public/plugin_assets
+sudo chmod -R 755 files log tmp public/plugin_assets
+
+Then to start redmine:
+sudo bundle exec rails server webrick -e development -b 0.0.0.0
+
+After the above I accessed http://localhost:3000/ in the browser and set admin pass to 11111111.
+
+===================================================================================
+2017/09/03 takeshi:
+To generate boilerplate code for the plugin, i did:
+
+sudo -E bundle exec ruby bin/rails generate redmine_plugin redmine_rt
+
+Then I needed to install redis-server:
+  sudo apt-get install -y redis-server
+And add this to redmine/Gemfile:
+  gem 'redis', '~> 3.0'
+Then updated:
+  bundle
+

@@ -1,7 +1,9 @@
 
-require_dependency 'redmine_rt_hook'
+require_dependency 'redmine_rt/hooks'
 
 require 'redmine'
+
+#require 'journals_controller_patch'
 
 ActiveSupport::Reloader.to_prepare do 
   require_dependency 'issue'
@@ -9,6 +11,14 @@ ActiveSupport::Reloader.to_prepare do
   # and registering multiple callbacks
   unless Issue.included_modules.include? RedmineRt::IssuePatch
     Issue.send(:include, RedmineRt::IssuePatch)
+  end
+
+  unless Journal.included_modules.include? RedmineRt::JournalPatch
+    Journal.send(:include, RedmineRt::JournalPatch)
+  end
+
+  unless JournalsController.included_modules.include? RedmineRt::JournalsControllerPatch
+    JournalsController.send(:include, RedmineRt::JournalsControllerPatch)
   end
 end
 

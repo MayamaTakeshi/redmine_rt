@@ -1,0 +1,6 @@
+<% reply_links = issue.notes_addable? -%>
+<% for journal in journals %>
+  <%= render :template => 'journals/show', :locals => {journal: journal, issue: issue, reply_links: reply_links} %>
+<% end %>
+
+<% heads_for_wiki_formatter if User.current.allowed_to?(:edit_issue_notes, issue.project) || User.current.allowed_to?(:edit_own_issue_notes, issue.project) %>

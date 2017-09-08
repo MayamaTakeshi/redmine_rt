@@ -1,6 +1,6 @@
 module RedmineRt
-  # Patches Redmine's Issue model. 
-  module IssuePatch
+  # Patches Redmine's Journal model. 
+  module JournalPatch
     def self.included(base) # :nodoc:
       base.extend(ClassMethods)
 
@@ -22,11 +22,11 @@ module RedmineRt
   module InstanceMethods
     def notify_save
       ActionCable.server.broadcast 'messages',
-        { event: 'issue ' + self.id.to_s +  ' saved'}
+        { event: 'journal ' + self.id.to_s +  ' saved', type: 'journal_saved', journal_id: self.id }
     end
     def notify_destroy
       ActionCable.server.broadcast 'messages',
-        { event: 'issue ' + self.id.to_s +  ' destroyed'}
+        { event: 'journal ' + self.id.to_s +  ' deleted', type: 'journal_deleted', journal_id: self.id }
     end
   end
 end    

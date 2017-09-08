@@ -3,3 +3,5 @@
 
 # cable for redmine_rt
 mount ActionCable.server => '/cable' 
+
+get '/journals/:id', to: 'journals#show'

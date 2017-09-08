@@ -34,9 +34,9 @@ module RedmineRt
 
         respond_to do |format|
           format.html {
-            render :action => 'show', :layout => false, locals: { journal: @journal, issue: @issue, reply_links: @reply_linsk}
+            render :action => 'show', :layout => false, locals: { journal: @journal, issue: @issue, reply_links: @reply_links}
           }
-          format.api
+          format.api { render plain: {journal: @journal, details: @journal.details}.to_json }
         end
      end
     end

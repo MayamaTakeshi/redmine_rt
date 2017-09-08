@@ -3,10 +3,7 @@ if(window.location.pathname.indexOf("/issues/") >= 0) {
 
   var remove = function(id) {
     var item = $("#change-" + id);
-    item.animate({
-      left: 0,
-      height: 0
-    }, 8000, function() {
+    item.hide(800, function() {
       // Animation complete.
       item.remove();
     });
@@ -15,7 +12,9 @@ if(window.location.pathname.indexOf("/issues/") >= 0) {
   var add = function(id) {
     $.get( "/journals/" + id, function( data ) {
       var item = $.parseHTML(data);
+      $(item).css('display', 'none');
       $("#history").append(item);
+      $(item).show(800);
     });
   };
 

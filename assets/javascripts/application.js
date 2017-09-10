@@ -1,42 +1,18 @@
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, or any plugin's
+// vendor/assets/javascripts directory can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// compiled file. JavaScript code in this file should be added after the last require_* statement.
+//
+// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
+// about supported directives.
+//
+//= require rails-ujs
+//= require turbolinks
+//= require_tree .
 
-if(window.location.pathname.indexOf("/issues/") >= 0) {
-
-  var remove = function(id) {
-    var item = $("#change-" + id);
-    item.hide(800, function() {
-      // Animation complete.
-      item.remove();
-    });
-  };
-
-  var add = function(id) {
-    $.get( "/journals/" + id, function( data ) {
-      var item = $.parseHTML(data);
-      $(item).css('display', 'none');
-      $("#history").append(item);
-      $(item).show(800);
-    });
-  };
-
-  this.App = {};
-
-  App.cable = ActionCable.createConsumer();
-
-  App.messages = App.cable.subscriptions.create('MessagesChannel', {
-    received: function(msg) {
-      console.log("got msg");
-      console.log(msg);
-      if(msg.type == "journal_deleted") {
-        remove(msg.journal_id);
-      } else if(msg.type == "journal_saved") {
-        var $item = $("#change-" + msg.journal_id);
-        if($item.length == 0) {
-          console.log("element absent. Adding it")
-          add(msg.journal_id); 
-        } else {
-          console.log("element already exists");
-        }
-      }
-    }
-  });
-}
+//= require jquery
+//= require_tree ./channels

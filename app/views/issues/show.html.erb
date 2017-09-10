@@ -1,0 +1,7 @@
+<% content_for :header_tags do %>
+  <%= javascript_include_tag(:action_cable, :plugin => 'redmine_rt') %>
+  <%= javascript_include_tag(:cable, :plugin => 'redmine_rt') %>
+  <%= javascript_include_tag(:issue_channel, :plugin => 'redmine_rt') %>
+<% end %>
+
+<%= render :parent %>

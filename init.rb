@@ -1,6 +1,10 @@
 
 require_dependency 'redmine_rt/hooks'
 
+require_dependency 'redmine_rt/channels/application_cable/connection'
+require_dependency 'redmine_rt/channels/application_cable/channel'
+require_dependency 'redmine_rt/channels/messages_channel'
+
 require 'redmine'
 
 #require 'journals_controller_patch'
@@ -21,6 +25,13 @@ ActiveSupport::Reloader.to_prepare do
     JournalsController.send(:include, RedmineRt::JournalsControllerPatch)
   end
 end
+
+#ActionCable.server.config.channels_path ||= []
+#ActionCable.server.config.channels_path << File.expand_path("../app/channels", __FILE__)
+
+#Rails.application.paths["app/channels"] ||= []
+#Rails.application.paths["app/channels"] << File.expand_path("../app/channels", __FILE__)
+
 
 Redmine::Plugin.register :redmine_rt do
   name 'Redmine Rt plugin'

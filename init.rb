@@ -1,6 +1,4 @@
 
-require_dependency 'redmine_rt/hooks'
-
 require_dependency 'redmine_rt/channels/application_cable/connection'
 require_dependency 'redmine_rt/channels/application_cable/channel'
 require_dependency 'redmine_rt/channels/messages_channel'

@@ -23,6 +23,8 @@ module RedmineRt
         @journal = Journal.includes([:details]).includes([:user => :email_address]).find(params[:id])
         @issue = Issue.find(@journal.journalized_id)
 
+        @journal.indice = params[:indice]
+
         if @journal.private_notes
           if @journal.user != User.current and !User.current.allowed_to?(:view_private_notes, @issue.project) 
             render plain: "you don't have permission", status: 401

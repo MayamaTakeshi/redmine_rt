@@ -11,10 +11,33 @@ if(window.location.pathname.indexOf("/issues/") >= 0) {
   };
 
   var add = function(id) {
-    $.get( "/journals/" + id, function( data ) {
+    var $history = $("#history");
+
+    var sorting = $history.attr('data-comment_sorting');
+
+    var last;
+
+    var $history_children = $history.find("> div");
+    if( sorting == 'desc') {
+      $last = $history_children.last();
+    } else {
+      $last = $history_children.first();
+    }
+
+    var indice = 1;
+    if($last.length > 0) {
+      indice = parseInt($last.find("div").attr("id").split("-")[1]) + 1;
+    }
+
+    $.get( "/journals/" + id + "?indice=" + indice, function( data ) {
       var item = $.parseHTML(data);
       $(item).css('display', 'none');
-      $("#history").append(item);
+
+      if( sorting == 'desc') {
+        $history.append(item);
+      } else {
+        $(item).insertAfter($history.find("h3"));
+      }
       $(item).show(800);
     });
   };

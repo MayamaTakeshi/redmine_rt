@@ -1,5 +1,46 @@
 (function() {
 
+$(window).load(function() {
+console.log("SETTING ON CLICK");
+$('#quick_notes_btn').click(function(e) {
+  console.log("clicked");
+  e.stopPropagation();
+  e.preventDefault();
+  if (e.handled == true) {
+    return;
+  }
+  e.handled = true;
+  var $ta = $('#quick_notes_ta');
+  if($ta.val().trim() == '') {
+    return;
+  }
+  var data = {
+    issue: {
+      notes: $ta.val(),
+      private_notes: $("#quick_notes_private_cbox").is(":checked") ? true : false
+    }
+  };
+
+  console.log("sending PUT");
+  $.ajax({
+   url: window.location.pathname + ".json",
+   method: 'PUT',
+   dataType: "text", // Expected type of server response body
+   contentType: 'application/json; charset=utf-8',
+   data: JSON.stringify(data),
+   success: function(response) {
+     console.log("PUT succcess");
+     $ta.val('');
+     $ta.removeData('changed');
+   },
+   error: function(textStatus, err) {
+     console.log("PUT failed: " + textStatus);
+     console.dir(err);
+   }
+  });
+});
+});
+
 if(window.location.pathname.indexOf("/issues/") >= 0) {
 
   var remove = function(id) {

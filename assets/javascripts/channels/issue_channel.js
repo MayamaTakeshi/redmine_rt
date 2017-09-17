@@ -85,7 +85,7 @@ if(window.location.pathname.indexOf("/issues/") >= 0) {
 
   App.messages = App.cable.subscriptions.create({
      channel: 'RedmineRt::MessagesChannel',
-     issue_id: <%= @issue.id %>
+     issue_id: $('meta[name=page_specific_js]').attr('issue_id')
   }, 
   {
     received: function(msg) {

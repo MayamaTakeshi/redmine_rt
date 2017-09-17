@@ -10,6 +10,10 @@ ActiveSupport::Reloader.to_prepare do
   # Guards against including the module multiple time (like in tests)  
   # and registering multiple callbacks
 
+  unless Issue.included_modules.include? RedmineRt::IssuePatch
+    Issue.send(:include, RedmineRt::IssuePatch)
+  end
+
   unless Journal.included_modules.include? RedmineRt::JournalPatch
     Journal.send(:include, RedmineRt::JournalPatch)
   end

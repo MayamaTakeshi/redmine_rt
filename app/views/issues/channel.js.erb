@@ -83,7 +83,11 @@ if(window.location.pathname.indexOf("/issues/") >= 0) {
     });
   };
 
-  App.messages = App.cable.subscriptions.create('RedmineRt::MessagesChannel', {
+  App.messages = App.cable.subscriptions.create({
+     channel: 'RedmineRt::MessagesChannel',
+     issue_id: <%= @issue.id %>
+  }, 
+  {
     received: function(msg) {
       console.log("got msg");
       console.log(msg);

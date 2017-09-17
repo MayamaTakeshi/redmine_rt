@@ -21,11 +21,11 @@ module RedmineRt
 
   module InstanceMethods
     def notify_save
-      ActionCable.server.broadcast 'messages',
+      ActionCable.server.broadcast "issue-#{self.journalized_id}:messages",
         { event: 'journal ' + self.id.to_s +  ' saved', type: 'journal_saved', journal_id: self.id }
     end
     def notify_destroy
-      ActionCable.server.broadcast 'messages',
+      ActionCable.server.broadcast "issue-#{self.journalized_id}:messages",
         { event: 'journal ' + self.id.to_s +  ' deleted', type: 'journal_deleted', journal_id: self.id }
     end
   end

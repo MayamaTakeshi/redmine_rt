@@ -10,8 +10,8 @@ module RedmineRt
       base.class_eval do
         unloadable # Send unloadable so it will not be unloaded in development
 
-        after_save :notify_save
-        after_destroy :notify_destroy
+        after_save :handle_after_save
+        after_destroy :handle_after_destroy
       end
     end
   end
@@ -20,11 +20,13 @@ module RedmineRt
   end
 
   module InstanceMethods
-    def notify_save
+    def handle_after_save
+      if self.journalized_type != 'Issue' then return end
       ActionCable.server.broadcast "issue-#{self.journalized_id}:messages",
         { event: 'journal ' + self.id.to_s +  ' saved', type: 'journal_saved', journal_id: self.id }
     end
-    def notify_destroy
+    def handle_after_destroy
+      if self.journalized_type != 'Issue' then return end
       ActionCable.server.broadcast "issue-#{self.journalized_id}:messages",
         { event: 'journal ' + self.id.to_s +  ' deleted', type: 'journal_deleted', journal_id: self.id }
     end

@@ -1,6 +1,12 @@
 (function() {
 
 $(window).load(function() {
+
+if( $("#history").attr("data-comment_sorting") == "desc") {
+  // move div quick_notes to bottom of div history
+  $("#quick_notes").insertAfter( $("#history") );
+}
+
 console.log("SETTING ON CLICK");
 $('#quick_notes_btn').click(function(e) {
   console.log("clicked");

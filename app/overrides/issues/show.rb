@@ -3,6 +3,7 @@ Deface::Override.new(:virtual_path => 'issues/show',
                      :insert_before => "erb[silent]:contains('if @journals.present?')") do
 """
 <% if @issue.notes_addable? %>
+<div id='quick_notes'>
 <fieldset><legend><%= l(:field_notes) %></legend>
 <textarea cols='60' rows='3' class='wiki-edit' name='quick_notes_ta' id='quick_notes_ta'></textarea>
 
@@ -14,6 +15,7 @@ Deface::Override.new(:virtual_path => 'issues/show',
 <button type='button' id='quick_notes_btn'><%= l(:button_submit) %></button>
 
 </fieldset>
+</div>
 <% end %>
 """
 end

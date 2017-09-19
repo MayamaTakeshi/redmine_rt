@@ -18,6 +18,10 @@ ActiveSupport::Reloader.to_prepare do
     Journal.send(:include, RedmineRt::JournalPatch)
   end
 
+  unless IssuesController.included_modules.include? RedmineRt::IssuesControllerPatch
+    IssuesController.send(:include, RedmineRt::IssuesControllerPatch)
+  end
+
   unless JournalsController.included_modules.include? RedmineRt::JournalsControllerPatch
     JournalsController.send(:include, RedmineRt::JournalsControllerPatch)
   end

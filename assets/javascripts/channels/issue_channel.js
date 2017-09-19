@@ -23,7 +23,7 @@ $('#quick_notes_btn').click(function(e) {
 
   console.log("sending PUT");
   $.ajax({
-   url: window.location.pathname + ".json",
+   url: window.location.pathname + "/add_quick_notes",
    method: 'PUT',
    dataType: "text", // Expected type of server response body
    contentType: 'application/json; charset=utf-8',

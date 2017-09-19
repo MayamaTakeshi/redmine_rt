@@ -5,3 +5,5 @@
 mount ActionCable.server => '/cable' 
 
 get '/journals/:id', to: 'journals#show'
+
+put '/issues/:id/add_quick_notes', to: 'issues#add_quick_notes'

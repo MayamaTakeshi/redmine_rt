@@ -58,7 +58,7 @@ sudo -E bundle exec ruby bin/rails generate redmine_plugin redmine_rt
 
 Then I needed to install redis-server:
   sudo apt-get install -y redis-server
-And add this to redmine/Gemfile:
+And add this to redmine_rt/Gemfile:
   gem 'redis', '~> 3.0'
 Then updated:
   bundle

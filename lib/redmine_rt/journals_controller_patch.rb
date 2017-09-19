@@ -1,5 +1,5 @@
 module RedmineRt
-  # Patches Redmine's JournalController. 
+  # Patches Redmine's JournalsController. 
   module JournalsControllerPatch
 
     def self.included(base) # :nodoc:

@@ -2,6 +2,13 @@
 
 $(window).load(function() {
 
+$('#quick_notes_ta').each(function () {
+  this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+}).on('input', function () {
+  this.style.height = 'auto';
+  this.style.height = (this.scrollHeight) + 'px';
+});
+
 if( $("#history").attr("data-comment_sorting") == "desc") {
   // move div quick_notes to bottom of div history
   $("#quick_notes").insertAfter( $("#history") );

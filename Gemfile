@@ -1,3 +1,3 @@
 gem 'redis', '~> 3.0'
 
-gem 'render_parent', :path => '/usr/local/src/git/github_MayamaTakeshi/render-parent'
+gem 'render_parent', :git => "https://github.com/MayamaTakeshi/render_parent.git", :ref => "eaaaae17"

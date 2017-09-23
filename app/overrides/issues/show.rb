@@ -8,7 +8,7 @@ Deface::Override.new(:virtual_path => 'issues/show',
 <textarea cols='60' rows='3' class='wiki-edit' name='quick_notes_ta' id='quick_notes_ta'></textarea>
 
 <% if @issue.safe_attribute? 'private_notes' %>
-<input type='checkbox' value='1' name='quick_notes_private_cbox' id='quick_notes_private_cbox' />
+<input type='checkbox' value='1' name='quick_notes_private_cbox' id='quick_notes_private_cbox' checked/>
 <label for='quick_private_notes'><%= l(:field_private_notes) %></label>
 <% end %>
 

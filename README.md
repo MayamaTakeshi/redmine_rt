@@ -21,3 +21,8 @@ production:
 
 Currently we just send notification of events (we don't send html fragments to clients) and this causes the client to update the page (making ajax calls if necessary).
 We might eventually change the code to push html fragments but considering that we might want to permit for this plugin to be used with previous redmine versions where we will not have tight integration between WebSocket server and redmine, maybe it is better to keep it this way.
+
+
+I recommend to use:
+  "My account" > Preferences > "Display comments" = "In reverse chronological order"
+as this will make "quick_notes" to be put above history section that I think looks better than having it below it.

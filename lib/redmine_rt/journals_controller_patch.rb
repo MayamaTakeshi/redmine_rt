@@ -36,6 +36,7 @@ module RedmineRt
 
         respond_to do |format|
           format.html {
+            headers["X-issue-lock-version"] = @issue.lock_version
             render :action => 'show', :layout => false, locals: { journal: @journal, issue: @issue, reply_links: @reply_links}
           }
           format.api { render plain: {journal: @journal, details: @journal.details}.to_json }

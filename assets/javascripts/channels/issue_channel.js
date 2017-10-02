@@ -83,7 +83,12 @@ if(window.location.pathname.indexOf("/issues/") >= 0) {
       indice = parseInt($last.find("div").attr("id").split("-")[1]) + 1;
     }
 
-    $.get( "/journals/" + id + "?indice=" + indice, function( data ) {
+    $.get( "/journals/" + id + "?indice=" + indice, function( data, statusText, jqXHR ) {
+      console.log("GET /journals");
+      var lock_version = jqXHR.getResponseHeader("X-issue-lock-version");
+      console.log(lock_version);
+      $("#issue_lock_version").attr("value", lock_version);
+
       var item = $.parseHTML(data);
       $(item).css('display', 'none');
 
@@ -111,6 +116,7 @@ if(window.location.pathname.indexOf("/issues/") >= 0) {
         if($item.length == 0) {
           console.log("element absent. Adding it")
           add(msg.journal_id); 
+          $("#last_journal_id").attr("value", msg.journal_id);
         } else {
           console.log("element already exists");
         }

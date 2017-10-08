@@ -64,10 +64,12 @@ if(window.location.pathname.indexOf("/issues/") >= 0) {
     });
   };
 
-  var add = function(id) {
+  var add_or_update_note = function(id, indice) {
     var $history = $("#history");
 
     var sorting = $history.attr('data-comment_sorting');
+
+    var existing_note = indice != null ? true : false;
 
     var last;
 
@@ -78,32 +80,42 @@ if(window.location.pathname.indexOf("/issues/") >= 0) {
       $last = $history_children.first();
     }
 
-    var indice = 1;
-    if($last.length > 0) {
-      indice = parseInt($last.find("div").attr("id").split("-")[1]) + 1;
+    if(!indice) {
+      indice = 1;
+      if($last.length > 0) {
+        indice = parseInt($last.find("div[id|='note']").attr("id").split("-")[1]) + 1;
+      }
     }
 
     $.get( "/journals/" + id + "?indice=" + indice, function( data, statusText, jqXHR ) {
-      console.log("GET /journals");
-      var lock_version = jqXHR.getResponseHeader("X-issue-lock-version");
+      console.log("GET /journals got statusText=" + statusText);
+
       console.log(lock_version);
+      var lock_version = jqXHR.getResponseHeader("X-issue-lock-version");
+
       $("#issue_lock_version").attr("value", lock_version);
 
       var item = $.parseHTML(data);
-      $(item).css('display', 'none');
 
-      if( sorting == 'desc') {
-        $history.append(item);
+      if(existing_note) {
+        console.log("existind note");
+        $("#note-" + indice).parent().replaceWith(item);
       } else {
-        $(item).insertAfter($history.find("h3"));
+        $(item).css('display', 'none');
+
+        if( sorting == 'desc') {
+          $history.append(item);
+        } else {
+          $(item).insertAfter($history.find("h3"));
+        }
+        $(item).show(800);
       }
-      $(item).show(800);
     });
   };
 
   App.messages = App.cable.subscriptions.create({
-     channel: 'RedmineRt::MessagesChannel',
-     issue_id: $('meta[name=page_specific_js]').attr('issue_id')
+    channel: 'RedmineRt::MessagesChannel',
+    issue_id: $('meta[name=page_specific_js]').attr('issue_id')
   }, 
   {
     received: function(msg) {
@@ -115,10 +127,12 @@ if(window.location.pathname.indexOf("/issues/") >= 0) {
         var $item = $("#change-" + msg.journal_id);
         if($item.length == 0) {
           console.log("element absent. Adding it")
-          add(msg.journal_id); 
+          add_or_update_note(msg.journal_id); 
           $("#last_journal_id").attr("value", msg.journal_id);
         } else {
           console.log("element already exists");
+          var indice = $item.find("div[id|='note']").attr("id").split("-")[1];
+          add_or_update_note(msg.journal_id, indice); 
         }
       }
     }

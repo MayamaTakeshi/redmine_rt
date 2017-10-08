@@ -1,3 +1,4 @@
 # English strings go here for Rails i18n
 en:
-  # my_label: "My label"
+  operation_failed: "Operation failed"
+  operation_failed_try_again_after_reloading: "The operation has failed. Please try again after reloading this page."

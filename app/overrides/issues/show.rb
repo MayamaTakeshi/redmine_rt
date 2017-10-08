@@ -17,6 +17,12 @@ Deface::Override.new(:virtual_path => 'issues/show',
 </fieldset>
 </div>
 <% end %>
+
+<div id='operation_failed_message' title='<%= l(:operation_failed) %>' style='display:none'>
+  <p>
+    <%= l(:operation_failed_try_again_after_reloading) %>
+  </p>
+</div>
 """
 end
 

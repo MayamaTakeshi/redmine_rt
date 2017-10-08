@@ -36,20 +36,29 @@ $('#quick_notes_btn').click(function(e) {
 
   console.log("sending PUT");
   $.ajax({
-   url: window.location.pathname + "/add_quick_notes",
-   method: 'PUT',
-   dataType: "text", // Expected type of server response body
-   contentType: 'application/json; charset=utf-8',
-   data: JSON.stringify(data),
-   success: function(response) {
-     console.log("PUT succcess");
-     $ta.val('');
-     $ta.removeData('changed');
-   },
-   error: function(textStatus, err) {
-     console.log("PUT failed: " + textStatus);
-     console.dir(err);
-   }
+    url: window.location.pathname + "/add_quick_notes",
+    method: 'PUT',
+    dataType: "text", // Expected type of server response body
+    contentType: 'application/json; charset=utf-8',
+    data: JSON.stringify(data),
+    success: function(response) {
+      console.log("PUT succcess");
+      $ta.val('');
+      $ta.removeData('changed');
+    },
+    error: function(textStatus, err) {
+      console.log("PUT failed: " + textStatus);
+      console.dir(err);
+
+      $( "#operation_failed_message" ).dialog({
+        modal: true,
+        buttons: {
+         Ok: function() {
+           $( this ).dialog( "close" );
+         }
+        }
+      });
+    }
   });
 });
 });

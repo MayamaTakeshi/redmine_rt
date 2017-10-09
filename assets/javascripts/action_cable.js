@@ -366,7 +366,7 @@
               willAttemptReconnect: this.monitor.isRunning()
             });
           },
-          error: function() {
+          error: function(err) {
             return ActionCable.log("WebSocket onerror event");
           }
         };

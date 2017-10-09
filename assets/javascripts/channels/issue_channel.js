@@ -130,11 +130,13 @@
      });
     };
 
+/*
     App.messages = App.cable.subscriptions.create({
       channel: 'RedmineRt::MessagesChannel',
       issue_id: $('meta[name=page_specific_js]').attr('issue_id')
     }, 
-    {
+*/
+    App.ws_subscribe({
       received: function(msg) {
         console.log("got msg");
         console.log(msg);
@@ -153,7 +155,7 @@
           }
         } else if(msg.event == "error") {
           App.show_modal("#unauthorized_message");
-          App.cable.close();
+          App.ws_disconnect();
         }
       }
     });

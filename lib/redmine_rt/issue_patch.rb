@@ -21,12 +21,12 @@ module RedmineRt
 
   module InstanceMethods
     def handle_issue_after_save
-      ActionCable.server.broadcast "issue-#{self.id}:messages",
+      Broadcaster.broadcast "issue-#{self.id}:messages", 
         { event: 'issue ' + self.id.to_s +  ' saved', type: 'issue_saved', issue_id: self.id }
     end
     def handle_issue_after_destroy
-      ActionCable.server.broadcast "issue-#{self.id}:messages",
+      Broadcaster.broadcast "issue-#{self.id}:messages",
         { event: 'issue ' + self.id.to_s +  ' deleted', type: 'issue_deleted', issue_id: self.id }
     end
   end
-end    
+end 

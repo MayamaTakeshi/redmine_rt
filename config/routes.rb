@@ -2,7 +2,10 @@
 # See: http://guides.rubyonrails.org/routing.html
 
 # cable for redmine_rt
-mount ActionCable.server => '/cable' 
+
+if Rails::VERSION::MAJOR >= 5
+	mount ActionCable.server => '/cable' 
+end
 
 get '/journals/:id', to: 'journals#show'
 

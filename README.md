@@ -2,6 +2,9 @@
 
 This works only on Rails 5.2.1 or above (use redmine head)
 
+Requirement:
+ redmine_base_deface >= '0.0.1'
+
 Install this following usual plugin installation procedure.
 Then add create file in redmine/app/cable.yml with the following content:
 ```

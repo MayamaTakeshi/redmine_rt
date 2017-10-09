@@ -1,29 +1,40 @@
-
-require_dependency 'redmine_rt/channels/application_cable/connection'
-require_dependency 'redmine_rt/channels/application_cable/channel'
-require_dependency 'redmine_rt/channels/messages_channel'
-
 require 'redmine'
 
-ActiveSupport::Reloader.to_prepare do 
-  require_dependency 'issue'
-  # Guards against including the module multiple time (like in tests)  
-  # and registering multiple callbacks
+def prepare() 
+    require_dependency 'issue'
 
-  unless Issue.included_modules.include? RedmineRt::IssuePatch
-    Issue.send(:include, RedmineRt::IssuePatch)
+    # Guards against including the module multiple time (like in tests)  
+    # and registering multiple callbacks
+
+    unless Issue.included_modules.include? RedmineRt::IssuePatch
+      Issue.send(:include, RedmineRt::IssuePatch)
+    end
+
+    unless Journal.included_modules.include? RedmineRt::JournalPatch
+      Journal.send(:include, RedmineRt::JournalPatch)
+    end
+
+    unless IssuesController.included_modules.include? RedmineRt::IssuesControllerPatch
+      IssuesController.send(:include, RedmineRt::IssuesControllerPatch)
+    end
+
+    unless JournalsController.included_modules.include? RedmineRt::JournalsControllerPatch
+      JournalsController.send(:include, RedmineRt::JournalsControllerPatch)
+    end
+end
+
+
+if Rails::VERSION::MAJOR >= 5
+  require_dependency 'redmine_rt/channels/application_cable/connection'
+  require_dependency 'redmine_rt/channels/application_cable/channel'
+  require_dependency 'redmine_rt/channels/messages_channel'
+
+  ActiveSupport::Reloader.to_prepare do 
+    prepare()
   end
-
-  unless Journal.included_modules.include? RedmineRt::JournalPatch
-    Journal.send(:include, RedmineRt::JournalPatch)
-  end
-
-  unless IssuesController.included_modules.include? RedmineRt::IssuesControllerPatch
-    IssuesController.send(:include, RedmineRt::IssuesControllerPatch)
-  end
-
-  unless JournalsController.included_modules.include? RedmineRt::JournalsControllerPatch
-    JournalsController.send(:include, RedmineRt::JournalsControllerPatch)
+else
+  Rails.configuration.to_prepare do 
+    prepare()
   end
 end
 

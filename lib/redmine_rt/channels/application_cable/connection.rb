@@ -10,13 +10,14 @@ module ApplicationCable
       def find_verified_user
         token = Token.find_by(action: :autologin, value: cookies[:autologin])
         if not token then
-          reject_unauthorized_connection
-          return
+          params[:unauthorized] = true
+          return verified_user 
 	end
         if verified_user = User.find(token.user_id) then
           verified_user
         else
-          reject_unauthorized_connection
+          params[:unauthorized] = true
+          return verified_user
         end
       end
   end

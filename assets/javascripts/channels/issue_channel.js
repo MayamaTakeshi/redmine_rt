@@ -142,6 +142,16 @@
             var indice = $item.find("div[id|='note']").attr("id").split("-")[1];
             add_or_update_note(msg.journal_id, indice); 
           }
+        } else if(msg.event == "error") {
+          $( "#unauthorized_message" ).dialog({
+            modal: true,
+            buttons: {
+              Ok: function() {
+                $( this ).dialog( "close" );
+              }
+            }
+          });
+          App.cable.close();
         }
       }
     });

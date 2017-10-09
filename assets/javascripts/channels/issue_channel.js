@@ -12,6 +12,17 @@
     // move div quick_notes to bottom of div history
     $("#quick_notes").insertAfter( $("#history") );
   }
+
+  App.show_modal = function(id) {
+    $( id ).dialog({
+      modal: true,
+      buttons: {
+        Ok: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+  }
   
   console.log("SETTING ON CLICK");
   $('#quick_notes_btn').click(function(e) {
@@ -49,14 +60,7 @@
         console.log("PUT failed: " + textStatus);
         console.dir(err);
   
-        $( "#operation_failed_message" ).dialog({
-          modal: true,
-          buttons: {
-           Ok: function() {
-             $( this ).dialog( "close" );
-           }
-          }
-        });
+        App.show_modal("#operation_failed_message");
       }
     });
   });
@@ -118,7 +122,12 @@
           }
           $(item).show(800);
         }
-      });
+      }).fail(function(jqXHR, error, reason) {
+        console.log(error)
+        if(reason == "Unauthorized") {
+          App.show_modal("#unauthorized_message");
+        }
+     });
     };
 
     App.messages = App.cable.subscriptions.create({
@@ -143,14 +152,7 @@
             add_or_update_note(msg.journal_id, indice); 
           }
         } else if(msg.event == "error") {
-          $( "#unauthorized_message" ).dialog({
-            modal: true,
-            buttons: {
-              Ok: function() {
-                $( this ).dialog( "close" );
-              }
-            }
-          });
+          App.show_modal("#unauthorized_message");
           App.cable.close();
         }
       }

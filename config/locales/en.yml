@@ -3,5 +3,5 @@ en:
   operation_failed: "Operation failed"
   operation_failed_try_again_after_reloading: "The operation has failed. Please try again after reloading this page."
 
-  unauthorized: "Unauthorized"
+  unauthorized: "Connection to server closed"
   unauthorized_try_reloading: "You must login. Try reloading this page."

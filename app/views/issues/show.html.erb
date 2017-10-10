@@ -1,9 +1,14 @@
 <% content_for :header_tags do %>
-
-  <%= javascript_include_tag(:action_cable, :plugin => 'redmine_rt') %>
-  <%= javascript_include_tag(:cable, :plugin => 'redmine_rt') %>
-
   <%= tag :meta, name: :page_specific_js, issue_id: @issue.id %>
+
+  <% if Rails::VERSION::MAJOR >= 5 %>
+    <%= javascript_include_tag(:action_cable, :plugin => 'redmine_rt') %>
+    <%= javascript_include_tag(:cable, :plugin => 'redmine_rt') %>
+  <% else %>
+    <%= javascript_include_tag(:websocket_rails, :plugin => 'redmine_rt') %>
+    <%= javascript_include_tag(:dispatcher, :plugin => 'redmine_rt') %>
+  <% end %>
+
   <%= javascript_include_tag("channels/issue_channel.js", :plugin => 'redmine_rt') %>
 
 <% end %>

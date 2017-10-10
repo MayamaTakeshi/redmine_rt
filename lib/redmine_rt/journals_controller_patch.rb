@@ -36,8 +36,13 @@ module RedmineRt
 
         respond_to do |format|
           format.html {
-            headers["X-issue-lock-version"] = @issue.lock_version
-            render :action => 'show', :layout => false, locals: { journal: @journal, issue: @issue, reply_links: @reply_links}
+            headers["X-issue-lock-version"] = @issue.lock_version.to_s
+      
+            if Rails::VERSION::MAJOR >= 5
+              render :action => 'show', :layout => false, locals: { journal: @journal, issue: @issue, reply_links: @reply_links}
+            else
+              render :action => 'show_old', :layout => false, locals: { journal: @journal, issue: @issue, reply_links: @reply_links}
+            end
           }
           format.api { render plain: {journal: @journal, details: @journal.details}.to_json }
         end

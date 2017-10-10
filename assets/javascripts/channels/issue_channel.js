@@ -130,36 +130,27 @@
      });
     };
 
-/*
-    App.messages = App.cable.subscriptions.create({
-      channel: 'RedmineRt::MessagesChannel',
-      issue_id: $('meta[name=page_specific_js]').attr('issue_id')
-    }, 
-*/
-    App.ws_subscribe({
-      received: function(msg) {
-        console.log("got msg");
-        console.log(msg);
-        if(msg.type == "journal_deleted") {
-          remove(msg.journal_id);
-        } else if(msg.type == "journal_saved") {
-          var $item = $("#change-" + msg.journal_id);
-          if($item.length == 0) {
-            console.log("element absent. Adding it")
-            add_or_update_note(msg.journal_id); 
-            $("#last_journal_id").attr("value", msg.journal_id);
-          } else {
-            console.log("element already exists");
-            var indice = $item.find("div[id|='note']").attr("id").split("-")[1];
-            add_or_update_note(msg.journal_id, indice); 
-          }
-        } else if(msg.event == "error") {
-          App.show_modal("#unauthorized_message");
-          App.ws_disconnect();
+    App.ws_setup(function(msg) {
+      console.log("got msg");
+      console.log(msg);
+      if(msg.type == "journal_deleted") {
+        remove(msg.journal_id);
+      } else if(msg.type == "journal_saved") {
+        var $item = $("#change-" + msg.journal_id);
+        if($item.length == 0) {
+          console.log("element absent. Adding it")
+          add_or_update_note(msg.journal_id); 
+          $("#last_journal_id").attr("value", msg.journal_id);
+        } else {
+          console.log("element already exists");
+          var indice = $item.find("div[id|='note']").attr("id").split("-")[1];
+          add_or_update_note(msg.journal_id, indice); 
         }
+      } else if(msg.event == "error") {
+        App.show_modal("#unauthorized_message");
+        App.ws_disconnect();
       }
     });
-  }
-  
+  } 
 }).call(this);
   

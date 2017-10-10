@@ -1,12 +1,16 @@
 # redmine_rt
 
-This works only on Rails 5.2.1 or above (use redmine head)
-
 Requirement:
- redmine_base_deface >= '0.0.1'
+  redmine_base_deface >= '0.0.1'
 
-Install this following usual plugin installation procedure.
-Then add create file in redmine/app/cable.yml with the following content:
+This works with Redmine 4 (using ActionCable) and 3 (using websocket-rails).
+
+Install it following usual plugin installation procedure.
+Then:
+
+
+***For Redmine 4***:
+Add create file in redmine/app/cable.yml with the following content:
 ```
 development:
   adapter: redis
@@ -20,10 +24,25 @@ production:
   adapter: redis
   url: redis://localhost:6379/1
   channel_prefix: redmine_rt
+
+```
+Start server doing:
+```
+bundle exec rails server puma -e production -b 0.0.0.0
+
 ```
 
+
+***For Redmine 3***
+
+
+Start server doing:
+```
+bundle exec rails server thin  -e production -b 0.0.0.0
+```
+
+
 Currently we just send notification of events (we don't send html fragments to clients) and this causes the client to update the page (making ajax calls if necessary).
-We might eventually change the code to push html fragments but considering that we might want to permit for this plugin to be used with previous redmine versions where we will not have tight integration between WebSocket server and redmine, maybe it is better to keep it this way.
 
 
 I recommend to use:

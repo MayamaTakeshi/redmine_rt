@@ -12,5 +12,9 @@ WebsocketRails::EventMap.describe do
   #   end
   # The above will handle an event triggered on the client like `product.new`.
 
-  subscribe :client_connected, to: RedmineRt::MessagesController, with_method: :client_connected
+  namespace :websocket_rails do
+    subscribe :subscribe, to: RedmineRt::AuthorizationController, with_method: :handle_subscribe
+
+    subscribe :subscribe_private, to: RedmineRt::AuthorizationController, with_method: :handle_subscribe_private
+  end
 end

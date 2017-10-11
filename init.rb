@@ -33,7 +33,7 @@ if Rails::VERSION::MAJOR >= 5
     prepare()
   end
 else
-  require_dependency 'redmine_rt/messages_controller'
+  require_dependency 'redmine_rt/authorization_controller'
 
   Rails.configuration.to_prepare do 
     prepare()

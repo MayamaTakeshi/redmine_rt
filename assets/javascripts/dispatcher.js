@@ -7,8 +7,13 @@
   var setup = function(event_handler) {
     console.log("Opening ws connection");
     App.dispatcher = new WebSocketRails(window.location.host + '/websocket');
-    var channel = App.dispatcher.subscribe("issue-" + $('meta[name=page_specific_js]').attr('issue_id') + ':messages');
-    channel.bind('dummy', event_handler);
+    var private_channel = App.dispatcher.subscribe_private("issue-" + $('meta[name=page_specific_js]').attr('issue_id') + ':messages', function(current_user) {
+      console.log( current_user.name + " has joined the channel");
+      private_channel.bind('dummy', event_handler);
+    }, function(reason) {
+      console.log("Could not connect to channel");       
+      event_handler(reason);
+    });
 
     App.dispatcher.bind('connection_closed', function() {
       console.log("ws connection closed");

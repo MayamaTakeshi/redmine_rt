@@ -110,7 +110,7 @@
         var item = $.parseHTML(data);
   
         if(existing_note) {
-          console.log("existind note");
+          console.log("existing note");
           $("#note-" + indice).parent().replaceWith(item);
         } else {
           $(item).css('display', 'none');

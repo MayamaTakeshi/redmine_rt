@@ -5,18 +5,20 @@
 (function() {
   this.App || (this.App = {});
 
-  App.cable = ActionCable.createConsumer();
+  App.ws_setup = function(event_handler) {
+    App.cable = ActionCable.createConsumer();
 
-  App.ws_subscribe = function(event_handlers) {
     App.cable.subscriptions.create({
       channel: 'RedmineRt::MessagesChannel',
       issue_id: $('meta[name=page_specific_js]').attr('issue_id')
-    },
-    event_handlers)
+    }, 
+    {
+    	received: event_handler
+    });
   };
 
   App.ws_disconnect = function() {
     App.cable.close();
-  }
+  };
 
 }).call(this);

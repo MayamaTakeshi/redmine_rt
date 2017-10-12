@@ -1,7 +1,7 @@
 module RedmineRt
   class MessagesChannel < ApplicationCable::Channel
     def subscribed
-      if current_user[:unauthorized] then
+      if not current_user or current_user[:unauthorized] then
         stream_from "unauthorized"
         ActionCable.server.broadcast "unauthorized", {"event": "error", "type": "unauthorized"}
       else

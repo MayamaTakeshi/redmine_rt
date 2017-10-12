@@ -4,4 +4,4 @@ en:
   operation_failed_try_again_after_reloading: "The operation has failed. Please try again after reloading this page."
 
   unauthorized: "Unauthorized"
-  unauthorized_try_reloading: "You must sign in."
+  unauthorized_logout_login: "Your autologin has expired. Please sign out and sign in again (make sure 'Stay logged in' is on)"

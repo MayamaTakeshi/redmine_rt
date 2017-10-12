@@ -26,7 +26,7 @@ Deface::Override.new(:virtual_path => 'issues/show',
 
 <div id='unauthorized_message' title='<%= l(:unauthorized) %>' style='display:none'>
   <p>
-    <%= l(:unauthorized_try_reloading) %>
+    <%= l(:unauthorized_logout_login) %>
   </p>
 </div>
 

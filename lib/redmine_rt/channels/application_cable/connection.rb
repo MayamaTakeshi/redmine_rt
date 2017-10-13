@@ -23,7 +23,7 @@ module ApplicationCable
           return
 	end
 
-        if verified_user = User.find(token.user_id) then
+        if token and (verified_user = User.find(token.user_id)) then
           return verified_user
         else
           request.params[:unauthorized] = true

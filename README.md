@@ -48,3 +48,9 @@ Currently we just send notification of events (we don't send html fragments to c
 I recommend to use:
   "My account" > Preferences > "Display comments" = "In reverse chronological order"
 as this will make "quick_notes" to be put above history section that I think looks better than having it below it.
+
+
+The plugin adds an API endpoint /channels/CHANNEL_NAME/post_msg.json to permit to send messages to channels. Usage:
+  curl -v -x '' -u YOUR_API_TOKEN:fake -X POST -H 'Content-Type: application/json' http://REDMINE_IP_PORT/channels/sales/post_msg.json -d '{"msg": {"event": "customer_arrived"}}'
+
+

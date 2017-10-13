@@ -5,7 +5,7 @@ module RedmineRt
         if Rails::VERSION::MAJOR >= 5
           ActionCable.server.broadcast channel_name, data
         else
-          WebsocketRails[channel_name].trigger('dummy', data)
+          WebsocketRails[channel_name].trigger('ALL', data)
         end
       end
     end

@@ -7,7 +7,7 @@
   var setup = function(event_handler) {
     console.log("Opening ws connection");
     App.dispatcher = new WebSocketRails(window.location.host + '/websocket');
-    var private_channel = App.dispatcher.subscribe_private("issue-" + $('meta[name=page_specific_js]').attr('issue_id') + ':messages', function(current_user) {
+    var private_channel = App.dispatcher.subscribe_private("issue:" + $('meta[name=page_specific_js]').attr('issue_id') + ':messages', function(current_user) {
       console.log( current_user.name + " has joined the channel");
       private_channel.bind('ALL', event_handler);
     }, function(reason) {

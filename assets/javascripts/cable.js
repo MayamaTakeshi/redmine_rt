@@ -9,7 +9,7 @@
     App.cable = ActionCable.createConsumer();
 
     App.cable.subscriptions.create({
-      channel: 'RedmineRt::MessagesChannel',
+      channel: 'RedmineRt::IssuesChannel',
       issue_id: $('meta[name=page_specific_js]').attr('issue_id')
     }, 
     {

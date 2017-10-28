@@ -25,7 +25,8 @@ end
 
 
 if Rails::VERSION::MAJOR >= 5
-  Rails.application.config.action_cable.allowed_request_origins = ['moz-extension://bf296676-d4ef-47c3-be02-7d7f66a0a521']
+  #Rails.application.config.action_cable.allowed_request_origins = ['moz-extension://bf296676-d4ef-47c3-be02-7d7f66a0a521']
+  Rails.application.config.action_cable.disable_request_forgery_protection = true
 
   require_dependency 'redmine_rt/channels/application_cable/connection'
   require_dependency 'redmine_rt/channels/application_cable/channel'

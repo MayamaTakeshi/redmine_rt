@@ -25,9 +25,12 @@ end
 
 
 if Rails::VERSION::MAJOR >= 5
+  Rails.application.config.action_cable.allowed_request_origins = ['moz-extension://bf296676-d4ef-47c3-be02-7d7f66a0a521']
+
   require_dependency 'redmine_rt/channels/application_cable/connection'
   require_dependency 'redmine_rt/channels/application_cable/channel'
   require_dependency 'redmine_rt/channels/issues_channel'
+  require_dependency 'redmine_rt/channels/users_channel'
 
   ActiveSupport::Reloader.to_prepare do 
     prepare()

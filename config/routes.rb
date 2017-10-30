@@ -13,4 +13,6 @@ put '/issues/:id/add_quick_notes', to: 'issues#add_quick_notes'
 
 get '/channels/info', to: 'channels#info'
 
+get '/channels/session_info', to: 'channels#session_info'
+
 post '/channels/:id/post_msg', to: 'channels#post_msg'

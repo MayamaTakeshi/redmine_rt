@@ -1,5 +1,5 @@
 <% content_for :header_tags do %>
-  <%= tag :meta, name: :page_specific_js, issue_id: @issue.id %>
+  <%= tag :meta, name: :page_specific_js, channel_name: "issue:" + @issue.id.to_s %>
 
   <% if Rails::VERSION::MAJOR >= 5 %>
     <%= javascript_include_tag(:action_cable, :plugin => 'redmine_rt') %>

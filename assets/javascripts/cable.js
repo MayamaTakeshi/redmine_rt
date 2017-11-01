@@ -18,7 +18,7 @@
   };
 
   App.ws_disconnect = function() {
-    App.cable.close();
+    App.cable.disconnect();
   };
 
 }).call(this);

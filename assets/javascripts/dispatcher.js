@@ -5,13 +5,14 @@
   App.inactive = false;
  
   var setup = function(event_handler) {
-    console.log("Opening ws connection");
+    var channel_name = $('meta[name=page_specific_js]').attr('channel_name');
+    console.log("Opening websocket-rails private channel " + channel_name);
     App.dispatcher = new WebSocketRails(window.location.host + '/websocket');
-    var private_channel = App.dispatcher.subscribe_private($('meta[name=page_specific_js]').attr('channel_name'), function(current_user) {
-      console.log( current_user.name + " has joined the channel");
+    var private_channel = App.dispatcher.subscribe_private(channel_name, function(current_user) {
+      console.log('Websocket-Rails connection and subscription successful');
       private_channel.bind('ALL', event_handler);
     }, function(reason) {
-      console.log("Could not connect to channel");       
+      console.log("Could not connect to channel");
       event_handler(reason);
     });
 
@@ -19,7 +20,7 @@
       console.log("ws connection closed");
       if(App.inactive) return;
       setTimeout(function () { 
-	setup(event_handler)
+        setup(event_handler)
       }, 2000);
     });
   };

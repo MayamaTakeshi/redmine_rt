@@ -10,7 +10,7 @@ Then:
 
 
 ***For Redmine 4***:
-Add create file in redmine/app/cable.yml with the following content:
+Create file redmine/app/cable.yml with the following content:
 ```
 development:
   adapter: redis
@@ -35,10 +35,30 @@ bundle exec rails server puma -e production -b 0.0.0.0
 
 ***For Redmine 3***
 
+Add/create file redmine/config/events.rb with the following content:
+
+```
+WebsocketRails::EventMap.describe do
+  namespace :websocket_rails do
+    subscribe :subscribe, to: RedmineRt::AuthorizationController, with_method: :handle_subscribe
+
+    subscribe :subscribe_private, to: RedmineRt::AuthorizationController, with_method: :handle_subscribe_private
+  end
+end
+```
+Open file config/application.rb and add config to delete Rack::Lock:
+```
+module RedmineApp
+  class Application < Rails::Application
+    ... ABRIDGED ...
+    config.middleware.delete Rack::Lock
+  end
+end
+```
 
 Start server doing:
 ```
-bundle exec rails server thin  -e production -b 0.0.0.0
+bundle exec rails server thin -e production -b 0.0.0.0 # other servers like puma or webrick will not work.
 ```
 
 

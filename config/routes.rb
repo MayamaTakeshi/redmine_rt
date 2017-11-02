@@ -9,6 +9,8 @@ end
 
 get '/journals/:id', to: 'journals#show'
 
+delete '/journals/:id', to: 'journals#destroy'
+
 put '/issues/:id/add_quick_notes', to: 'issues#add_quick_notes'
 
 get '/channels/info', to: 'channels#info'

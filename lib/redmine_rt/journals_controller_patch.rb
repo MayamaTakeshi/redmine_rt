@@ -9,6 +9,8 @@ module RedmineRt
 
       base.class_eval do
         unloadable # Send unloadable so it will not be unloaded in development
+
+				accept_api_auth :destroy
       end
 
     end
@@ -18,10 +20,16 @@ module RedmineRt
 
     module InstanceMethods
       def show
-        # TODO must check if user is allowed to see this journal
 
         @journal = Journal.includes([:details]).includes([:user => :email_address]).find(params[:id])
         @issue = Issue.find(@journal.journalized_id)
+
+				user = User.current
+				if @journal.private_notes? && @journal.user != user then
+					if not user.allowed_to(:view_private_notes, @issue.project)
+						raise ::Unauthorized
+					end
+				end
 
         @journal.indice = params[:indice]
 
@@ -46,7 +54,18 @@ module RedmineRt
           }
           format.api { render plain: {journal: @journal, details: @journal.details}.to_json }
         end
-     end
+      end
+
+			def destroy
+        @journal = Journal.find(params[:id])
+				unless @journal.editable_by?(User.current)
+					raise ::Unauthorized
+				end
+				@journal.destroy
+				respond_to do |format|
+					format.api
+				end
+			end
     end
   end
 end

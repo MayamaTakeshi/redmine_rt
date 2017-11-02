@@ -31,6 +31,7 @@ if Rails::VERSION::MAJOR >= 5
   require_dependency 'redmine_rt/channels/application_cable/connection'
   require_dependency 'redmine_rt/channels/application_cable/channel'
   require_dependency 'redmine_rt/channels/channel'
+  require_dependency 'redmine_rt/broadcaster'
 
   ActiveSupport::Reloader.to_prepare do 
     prepare()

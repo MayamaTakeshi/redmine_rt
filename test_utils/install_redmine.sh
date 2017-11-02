@@ -4,6 +4,28 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+function usage() {
+	cat <<EOF
+Usage:
+	$0 redmine_version
+
+Examples:
+	$0 3.4.3
+
+	$0 fc1912442fed541c8d3a207ce71bbeb9569a32d1
+EOF
+}
+
+if [[ $# != 1 ]]
+then
+	usage;
+	exit 1;
+fi
+
+version=$1
+	
+
+
 echo "I need the root password for mysql server:"
 read -s mysql_pass
 
@@ -23,14 +45,21 @@ sudo -E gem install rmagick -v '2.16.0'
 
 
 
-rm -f redmine-3.4.3.tar.gz
-rm -fr redmine-3.4.3
+rm -fr redmine-$version*
 
-wget http://www.redmine.org/releases/redmine-3.4.3.tar.gz
 
-tar xvzf redmine-3.4.3.tar.gz
+if `echo $version | grep "\."`
+then
+	wget http://www.redmine.org/releases/redmine-$version.tar.gz
+	tar xvzf redmine-$version.tar.gz
+	cd redmine-$version
+else
+	git clone https://github.com/redmine/redmine redmine-$version
+	cd redmine-$version
+	git checkout $version
+fi
 
-cd redmine-3.4.3
+
 cp config/database.yml.example config/database.yml
 
 sed -i 's/redmine_development/redmine/g' config/database.yml

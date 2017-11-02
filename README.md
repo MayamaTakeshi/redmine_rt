@@ -24,7 +24,7 @@ bundle install
 
 ***For Redmine 4***:
 
-Create file redmine/app/cable.yml with the following content:
+Create file redmine/config/cable.yml with the following content:
 ```
 development:
   adapter: redis

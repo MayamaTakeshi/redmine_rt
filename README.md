@@ -1,15 +1,29 @@
 # redmine_rt
 
-Requirement:
-  redmine_base_deface >= '0.0.1'
+This plugin works with Redmine 4 (using ActionCable) and 3 (using websocket-rails).
 
-This works with Redmine 4 (using ActionCable) and 3 (using websocket-rails).
 
-Install it following usual plugin installation procedure.
+You must install dependency plugin redmine_base_deface:
+```
+cd plugins
+git clone https://github.com/jbbarth/redmine_base_deface
+```
+
+Install it following usual plugin installation procedure:
+```
+cd plugins
+git clone https://github.com/MayamaTakeshi/redmine_rt
+```
+
 Then:
+```
+cd ..
+bundle install
+```
 
 
 ***For Redmine 4***:
+
 Create file redmine/app/cable.yml with the following content:
 ```
 development:
@@ -26,6 +40,7 @@ production:
   channel_prefix: redmine_rt
 
 ```
+
 Start server doing:
 ```
 bundle exec rails server puma -e production -b 0.0.0.0
@@ -35,7 +50,7 @@ bundle exec rails server puma -e production -b 0.0.0.0
 
 ***For Redmine 3***
 
-Add/create file redmine/config/events.rb with the following content:
+Add/create file redmine-3.X.X/config/events.rb with the following content:
 
 ```
 WebsocketRails::EventMap.describe do
@@ -46,7 +61,8 @@ WebsocketRails::EventMap.describe do
   end
 end
 ```
-Open file config/application.rb and add config to delete Rack::Lock:
+
+Open file redmine-3.X.X/config/application.rb and add config to delete Rack::Lock:
 ```
 module RedmineApp
   class Application < Rails::Application
@@ -56,10 +72,16 @@ module RedmineApp
 end
 ```
 
+Open file Redmine-3.X.X/plugins/redmine_rt/Gemfile and uncomment the following line:
+```
+gem 'websocket-rails', git: 'https://github.com/recurser/websocket-rails', branch: 'bugfix/388-latest-faye-websocket'
+```
+
 Start server doing:
 ```
-bundle exec rails server thin -e production -b 0.0.0.0 # other servers like puma or webrick will not work.
+bundle exec rails server thin -e production -b 0.0.0.0 
 ```
+Obs: you must use server thin. Other servers like puma or webrick will not work.
 
 
 Currently we just send notification of events (we don't send html fragments to clients) and this causes the client to update the page (making ajax calls if necessary).

@@ -9,7 +9,7 @@ cd plugins
 git clone https://github.com/jbbarth/redmine_base_deface
 ```
 
-Install it following usual plugin installation procedure:
+Install redmine_rt following usual plugin installation procedure:
 ```
 cd plugins
 git clone https://github.com/MayamaTakeshi/redmine_rt
@@ -20,6 +20,12 @@ Then:
 cd ..
 bundle install
 ```
+
+The you need to setup your redmine server:
+  Administration -> Authentication -> 
+    "Autologin" must be enabled.
+  Administration -> Settings -> API 
+    "Enable REST web service" must be ON.
 
 
 ***For Redmine 4***:

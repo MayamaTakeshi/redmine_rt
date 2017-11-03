@@ -1,26 +1,27 @@
 require 'redmine'
 
 def prepare() 
-    require_dependency 'issue'
+  require_dependency 'issue'
+	require_dependency 'redmine_rt/channels_controller'
 
-    # Guards against including the module multiple time (like in tests)  
-    # and registering multiple callbacks
+  # Guards against including the module multiple time (like in tests)  
+  # and registering multiple callbacks
 
-    unless Issue.included_modules.include? RedmineRt::IssuePatch
-      Issue.send(:include, RedmineRt::IssuePatch)
-    end
+  unless Issue.included_modules.include? RedmineRt::IssuePatch
+    Issue.send(:include, RedmineRt::IssuePatch)
+  end
 
-    unless Journal.included_modules.include? RedmineRt::JournalPatch
-      Journal.send(:include, RedmineRt::JournalPatch)
-    end
+  unless Journal.included_modules.include? RedmineRt::JournalPatch
+    Journal.send(:include, RedmineRt::JournalPatch)
+  end
 
-    unless IssuesController.included_modules.include? RedmineRt::IssuesControllerPatch
-      IssuesController.send(:include, RedmineRt::IssuesControllerPatch)
-    end
+  unless IssuesController.included_modules.include? RedmineRt::IssuesControllerPatch
+    IssuesController.send(:include, RedmineRt::IssuesControllerPatch)
+  end
 
-    unless JournalsController.included_modules.include? RedmineRt::JournalsControllerPatch
-      JournalsController.send(:include, RedmineRt::JournalsControllerPatch)
-    end
+  unless JournalsController.included_modules.include? RedmineRt::JournalsControllerPatch
+    JournalsController.send(:include, RedmineRt::JournalsControllerPatch)
+  end
 end
 
 
@@ -32,13 +33,13 @@ if Rails::VERSION::MAJOR >= 5
   require_dependency 'redmine_rt/channels/application_cable/channel'
   require_dependency 'redmine_rt/channels/channel'
   require_dependency 'redmine_rt/broadcaster'
-  require_dependency 'redmine_rt/channels_controller'
 
   ActiveSupport::Reloader.to_prepare do 
     prepare()
   end
 else
   require_dependency 'redmine_rt/authorization_controller'
+  require_dependency 'redmine_rt/broadcaster'
 
   Rails.configuration.to_prepare do 
     prepare()

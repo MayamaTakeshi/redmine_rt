@@ -63,7 +63,7 @@ module RedmineRt
 				end
 				@journal.destroy
 				respond_to do |format|
-					format.api
+					format.api { render :nothing => true, :status => 204 }
 				end
 			end
     end

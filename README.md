@@ -1,4 +1,4 @@
-# redmine_rt
+# redmine_rt (Redmine Real-Time plugin)
 
 This plugin provides:
   - Notification of issue changes (addition, removal, update of journals)

@@ -24,4 +24,4 @@ api_token=$2
 issue_id=$3
 user=$4
 
-curl --insecure -v -x '' -u $api_token:fake $redmine_url/channels/user:$user/post_msg.json -X POST -H 'Content-Type: application/json' -d "{\"msg\": {\"command\": \"open_url\", \"url\": \"$redmine_url\/issues\/$issue_id\"}}"
+curl --insecure -v -x '' -u $api_token:fake $redmine_url/channels/user:$user/post_msg.json -X POST -H 'Content-Type: application/json' -d "{\"msg\": {\"command\": \"open_url\", \"data\": {\"url\": \"$redmine_url\/issues\/$issue_id\"}}}"

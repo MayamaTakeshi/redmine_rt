@@ -28,7 +28,7 @@ interval=$4
 count=0
 while [[ 1 ]]
 do
-	curl -v -u --insecure $api_token:fake -x '' $redmine_url/issues/$issue_id.json -X PUT -H 'Content-Type: application/json' -d "{\"issue\": {\"notes\": \"note $count\"}}"
+	curl -v --insecure -u $api_token:fake -x '' $redmine_url/issues/$issue_id.json -X PUT -H 'Content-Type: application/json' -d "{\"issue\": {\"notes\": \"note $count\"}}"
 	sleep $interval
 
 	for journal_id in `curl -s --insecure -u $api_token:fake -x '' $redmine_url/issues/$issue_id.json?include=journals | jq .issue.journals[].id`

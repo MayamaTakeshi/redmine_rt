@@ -94,7 +94,7 @@ Start server doing:
 ```
 bundle exec rails server thin -e production -b 0.0.0.0 
 ```
-Obs: you must use server thin. Other servers like puma or webrick will not work.
+Obs: for Redmine 3 you must use server thin. Other servers like puma or webrick will not work.
 
 
 Currently we just send notification of events (we don't send html fragments to clients) and this causes the client to update the page (making ajax calls if necessary).

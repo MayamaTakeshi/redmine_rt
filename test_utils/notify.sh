@@ -8,7 +8,7 @@ function usage() {
 cat <<EOF
 
 Usage: $0 redmine_url api_token 'channel_id' 'notification_data'
-Ex:    $0 http://localhost:3000 69139917c128da6186de3439a8674b278cb494de "user:admin" '{"title": "Call from Pablo Picasso", "message": "Probably it is a hoax. But who knows?", "imageUrl": "https://cdn.dribbble.com/users/4385/screenshots/344648/picasso_icon.jpg"}'
+Ex:    $0 http://localhost:3000 69139917c128da6186de3439a8674b278cb494de "user:admin" '{"title": "Call from Pablo Picasso", "message": "Impatient customer. Hurry up!", "imageUrl": "https://cdn.dribbble.com/users/4385/screenshots/344648/picasso_icon.jpg"}'
 EOF
 }
 

@@ -1,6 +1,12 @@
 # redmine_rt
 
-This plugin works with Redmine 4 (using ActionCable) and 3 (using websocket-rails).
+This plugin provides:
+  - Notification of issue changes (addition, removal, update of journals)
+  - API method post_msg to permit to send message to channels
+  - WebSocket endpoints to permit to subscribe to channels and send/receive messages thru them.
+  
+
+This plugin works with Redmine 4 (https://github.com/redmine/redmine) using ActionCable or Redmine 3 using websocket-rails (http://websocket-rails.github.io/).
 
 
 You must install dependency plugin redmine_base_deface:
@@ -21,7 +27,7 @@ cd ..
 bundle install
 ```
 
-The you need to setup your redmine server:
+Then you need to setup your redmine server:
   Administration -> Authentication -> 
     "Autologin" must be enabled.
   Administration -> Settings -> API 
@@ -57,7 +63,7 @@ bundle exec rails server puma -e production -b 0.0.0.0
 
 ***For Redmine 3***
 
-Add/create file redmine-3.X.X/config/events.rb with the following content:
+Add/create file redmine/config/events.rb with the following content:
 
 ```
 WebsocketRails::EventMap.describe do
@@ -69,7 +75,7 @@ WebsocketRails::EventMap.describe do
 end
 ```
 
-Open file redmine-3.X.X/config/application.rb and add config to delete Rack::Lock:
+Open file redmine/config/application.rb and add config to delete Rack::Lock:
 ```
 module RedmineApp
   class Application < Rails::Application
@@ -79,7 +85,7 @@ module RedmineApp
 end
 ```
 
-Open file Redmine-3.X.X/plugins/redmine_rt/Gemfile and uncomment the following line:
+Open file Redmine/plugins/redmine_rt/Gemfile and uncomment the following line:
 ```
 gem 'websocket-rails', git: 'https://github.com/recurser/websocket-rails', branch: 'bugfix/388-latest-faye-websocket'
 ```
@@ -101,5 +107,6 @@ as this will make "quick_notes" to be put above history section that I think loo
 
 The plugin adds an API endpoint /channels/CHANNEL_NAME/post_msg.json to permit to send messages to channels. Usage:
   curl -v -x '' -u YOUR_API_TOKEN:fake -X POST -H 'Content-Type: application/json' http://REDMINE_IP_PORT/channels/sales/post_msg.json -d '{"msg": {"event": "customer_arrived"}}'
+
 
 

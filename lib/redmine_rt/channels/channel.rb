@@ -12,6 +12,12 @@ module RedmineRt
        	  stream_from params['name']
         end
       end
-   end
+    end
+
+    def receive(data)
+      if data['command'] == "send_msg" then
+        Broadcaster.broadcast(data['data']['channel_name'], data['data']['msg'])
+      end
+    end
   end
 end

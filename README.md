@@ -71,7 +71,10 @@ WebsocketRails::EventMap.describe do
     subscribe :subscribe, to: RedmineRt::AuthorizationController, with_method: :handle_subscribe
 
     subscribe :subscribe_private, to: RedmineRt::AuthorizationController, with_method: :handle_subscribe_private
+
   end
+
+  subscribe :post_msg, to: RedmineRt::AuthorizationController, with_method: :post_msg
 end
 ```
 
@@ -102,7 +105,7 @@ Currently we just send notification of events (we don't send html fragments to c
 
 I recommend to use:
   "My account" > Preferences > "Display comments" = "In reverse chronological order"
-as this will make "quick_notes" to be put above history section that I think looks better than having it below it.
+as this will make "quick_notes" to be put above history section that I think looks better than having it below it when update of notes is done.
 
 
 The plugin adds an API endpoint /channels/CHANNEL_NAME/post_msg.json to permit to send messages to channels. Usage:

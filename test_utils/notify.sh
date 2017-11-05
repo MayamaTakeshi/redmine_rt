@@ -24,4 +24,4 @@ api_token=$2
 channel_id=$3
 notification_data=$4
 
-curl --insecure -v -x '' -u $api_token:fake $redmine_url/channels/$channel_id/post_msg.json -X POST -H 'Content-Type: application/json' -d "{\"msg\": {\"command\": \"show_notification\", \"data\": $notification_data}}"
+curl --insecure -v -x '' -u $api_token:fake $redmine_url/channels/$channel_id/post_msg.json -X POST -H 'Content-Type: application/json' -d "{\"command\": \"show_notification\", \"data\": $notification_data}"

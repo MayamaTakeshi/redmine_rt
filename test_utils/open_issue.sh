@@ -8,7 +8,7 @@ function usage() {
 cat <<EOF
 
 Usage: $0 redmine_url api_token issue_id user
-Ex:    $0 http://localhost:3000 69139917c128da6186de3439a8674b278cb494de 1 admin
+Ex:    $0 http://localhost:3000 3b188399dbca8b834145cf9ffe15f2fed8c3e3a6 4 admin
 EOF
 }
 

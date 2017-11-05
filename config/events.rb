@@ -17,4 +17,6 @@ WebsocketRails::EventMap.describe do
 
     subscribe :subscribe_private, to: RedmineRt::AuthorizationController, with_method: :handle_subscribe_private
   end
+
+	subscribe :post_msg, to: RedmineRt::AuthorizationController, with_method: :post_msg
 end

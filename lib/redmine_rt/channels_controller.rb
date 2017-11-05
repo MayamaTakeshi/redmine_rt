@@ -20,7 +20,12 @@ class ChannelsController < ApplicationController
   end
 
   def post_msg
-    RedmineRt::Broadcaster.broadcast params[:id], params[:msg]
+    if !User.current or User.current.login == "" then
+      raise ::Unauthorized
+    end
+
+		msg = params.except(:id)
+    RedmineRt::Broadcaster.broadcast params[:id], msg
     render status: 204, body: nil
   end
 end

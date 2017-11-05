@@ -23,5 +23,9 @@ module RedmineRt
         deny_channel({:event => "error", :details => "unauthorized"})
       end
     end
+
+		def post_msg
+      WebsocketRails[message[:channel_name]].trigger('ALL', message[:msg])
+		end
   end
 end

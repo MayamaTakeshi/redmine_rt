@@ -55,7 +55,9 @@ production:
 ```
 
 Start server doing:
+
 ```
+bundle install
 bundle exec rails server puma -e production -b 0.0.0.0
 
 ```

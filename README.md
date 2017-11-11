@@ -57,7 +57,6 @@ production:
 Start server doing:
 
 ```
-bundle install
 bundle exec rails server puma -e production -b 0.0.0.0
 
 ```
@@ -97,6 +96,7 @@ gem 'websocket-rails', git: 'https://github.com/recurser/websocket-rails', branc
 
 Start server doing:
 ```
+bundle install
 bundle exec rails server thin -e production -b 0.0.0.0 
 ```
 Obs: for Redmine 3 you must use server thin. Other servers like puma or webrick will not work.

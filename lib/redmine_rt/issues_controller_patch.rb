@@ -2,6 +2,10 @@ module RedmineRt
   # Patches Redmine's IssuesController. 
   module IssuesControllerPatch
 
+    def sample_helper_method
+      return "some_result"
+    end
+
     def self.included(base) # :nodoc:
       base.extend(ClassMethods)
 
@@ -12,6 +16,8 @@ module RedmineRt
 
         before_action :find_issue, :only => [:show, :edit, :update, :add_quick_notes]
         before_action :authorize, :except => [:index, :new, :create, :add_quick_notes]
+
+	helper_method :sample_helper_method # this method can be called from an issues view.
       end
 
     end
@@ -29,6 +35,8 @@ module RedmineRt
         save_issue_with_child_records
         render json: "{}"
       end
+
     end
+
   end
 end

@@ -6,7 +6,10 @@
   this.App || (this.App = {});
 
   App.ws_setup = function(event_handler) {
-    App.cable = ActionCable.createConsumer();
+
+    var base_url = window.location.href.split("/issues/")[0]
+
+    App.cable = ActionCable.createConsumer(base_url + "/cable");
 
     App.cable.subscriptions.create({
       channel: 'RedmineRt::Channel',

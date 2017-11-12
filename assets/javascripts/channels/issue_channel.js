@@ -1,5 +1,11 @@
 (function() {
+  var base_url = "";
+
   $(window).load(function() {
+
+  if(window.location.pathname.indexOf("/issues/") >= 0) {
+    base_url = window.location.href.split("/issues/")[0];
+  }
   
   $('#quick_notes_ta').each(function () {
     this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
@@ -45,8 +51,10 @@
     };
   
     console.log("sending PUT");
+
+    var issue_id = window.location.pathname.split("/issues/")[1].split("?")[0];
     $.ajax({
-      url: window.location.pathname + "/add_quick_notes",
+      url: base_url + "/issues/" + issue_id + "/add_quick_notes",
       method: 'PUT',
       dataType: "text", // Expected type of server response body
       contentType: 'application/json; charset=utf-8',
@@ -99,7 +107,7 @@
         }
       }
   
-      $.get( "/journals/" + id + "?indice=" + indice, function( data, statusText, jqXHR ) {
+      $.get(base_url + "/journals/" + id + "?indice=" + indice, function( data, statusText, jqXHR ) {
         console.log("GET /journals got statusText=" + statusText);
   
         console.log(lock_version);

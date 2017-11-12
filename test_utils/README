@@ -1,0 +1,14 @@
+To run redmine behind nginx proxy with SSL use:
+
+
+http {
+	map $http_upgrade $connection_upgrade {
+		default upgrade;
+		'' close;
+	}
+}
+
+in the /etc/nginx/nginx.conf
+
+and copy redmine.nginx.conf to /etc/nginx/sites-enabled
+

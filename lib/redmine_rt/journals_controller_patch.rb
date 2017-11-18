@@ -10,7 +10,7 @@ module RedmineRt
       base.class_eval do
         unloadable # Send unloadable so it will not be unloaded in development
 
-				accept_api_auth :destroy
+        accept_api_auth :destroy
       end
 
     end
@@ -24,12 +24,12 @@ module RedmineRt
         @journal = Journal.includes([:details]).includes([:user => :email_address]).find(params[:id])
         @issue = Issue.find(@journal.journalized_id)
 
-				user = User.current
-				if @journal.private_notes? && @journal.user != user then
-					if not user.allowed_to(:view_private_notes, @issue.project)
-						raise ::Unauthorized
-					end
-				end
+        user = User.current
+        if @journal.private_notes? && @journal.user != user then
+          if not user.allowed_to?(:view_private_notes, @issue.project)
+             raise ::Unauthorized
+          end
+        end
 
         @journal.indice = params[:indice]
 

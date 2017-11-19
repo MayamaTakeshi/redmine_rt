@@ -121,3 +121,6 @@ There is a companion webextension that adds some extra features (but you need to
   
   https://chrome.google.com/webstore/detail/redminert/mnbpcoaepnlppdfgfkkleekfomlbpjgn
 
+
+Video demonstration:
+https://www.youtube.com/watch?v=XiHFAhs5o5M&feature=youtu.be

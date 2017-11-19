@@ -115,3 +115,9 @@ The plugin adds an API endpoint /channels/CHANNEL_NAME/post_msg.json to permit t
 
 
 
+There is a companion webextension that adds some extra features (but you need to implement an app to publish messages):
+
+  https://addons.mozilla.org/en-US/firefox/addon/redmine_rt/
+  
+  https://chrome.google.com/webstore/detail/redminert/mnbpcoaepnlppdfgfkkleekfomlbpjgn
+

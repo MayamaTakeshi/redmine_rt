@@ -116,6 +116,14 @@
         $("#issue_lock_version").attr("value", lock_version);
   
         var item = $.parseHTML(data);
+
+        $(item).find('a').each(function() {
+          var audio_suffixes = ['wav', 'mp3', 'ogg'];
+          var suffix = $(this).attr('href').split('.').pop();
+          if(audio_suffixes.indexOf(suffix) >= 0) {
+            $(this).replaceWith("<audio controls preload='none'><source src=" + $(this).attr('href') + "/></audio>")
+          }
+        });
   
         if(existing_note) {
           console.log("existing note");

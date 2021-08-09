@@ -24,26 +24,19 @@ def prepare()
   end
 end
 
+if Rails::VERSION::MAJOR < 5
+  raise "Only Rails 5 and over are supported"
+end
 
-if Rails::VERSION::MAJOR >= 5
-  #Rails.application.config.action_cable.allowed_request_origins = ['moz-extension://bf296676-d4ef-47c3-be02-7d7f66a0a521']
-  Rails.application.config.action_cable.disable_request_forgery_protection = true
+Rails.application.config.action_cable.disable_request_forgery_protection = true
 
-  require_dependency 'redmine_rt/channels/application_cable/connection'
-  require_dependency 'redmine_rt/channels/application_cable/channel'
-  require_dependency 'redmine_rt/channels/channel'
-  require_dependency 'redmine_rt/broadcaster'
+require_dependency 'redmine_rt/channels/application_cable/connection'
+require_dependency 'redmine_rt/channels/application_cable/channel'
+require_dependency 'redmine_rt/channels/channel'
+require_dependency 'redmine_rt/broadcaster'
 
-  ActiveSupport::Reloader.to_prepare do 
-    prepare()
-  end
-else
-  require_dependency 'redmine_rt/authorization_controller'
-  require_dependency 'redmine_rt/broadcaster'
-
-  Rails.configuration.to_prepare do 
-    prepare()
-  end
+ActiveSupport::Reloader.to_prepare do
+  prepare()
 end
 
 Redmine::Plugin.register :redmine_rt do

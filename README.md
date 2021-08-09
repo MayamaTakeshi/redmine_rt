@@ -6,7 +6,7 @@ This plugin provides:
   - WebSocket endpoints to permit to subscribe to channels and send/receive messages thru them.
   
 
-This plugin works with Redmine 4 (https://github.com/redmine/redmine) using ActionCable or Redmine 3 using websocket-rails (http://websocket-rails.github.io/).
+This plugin works with Redmine 4 and above (https://github.com/redmine/redmine).
 
 
 You must install dependency plugin redmine_base_deface:
@@ -28,15 +28,16 @@ bundle install
 ```
 
 Then you need to setup your redmine server:
+
   Administration -> Authentication -> 
     "Autologin" must be enabled.
+
   Administration -> Settings -> API 
     "Enable REST web service" must be ON.
 
 
-***For Redmine 4***:
 
-Install redis-server.
+Then install redis-server.
 Then create file redmine/config/cable.yml with the following content:
 ```
 development:
@@ -60,48 +61,6 @@ Start server doing:
 bundle exec rails server puma -e production -b 0.0.0.0
 
 ```
-
-
-***For Redmine 3***
-
-Add/create file redmine/config/events.rb with the following content:
-
-```
-WebsocketRails::EventMap.describe do
-  namespace :websocket_rails do
-    subscribe :subscribe, to: RedmineRt::AuthorizationController, with_method: :handle_subscribe
-
-    subscribe :subscribe_private, to: RedmineRt::AuthorizationController, with_method: :handle_subscribe_private
-
-  end
-
-  subscribe :post_msg, to: RedmineRt::AuthorizationController, with_method: :post_msg
-end
-```
-
-Open file redmine/config/application.rb and add config to delete Rack::Lock:
-```
-module RedmineApp
-  class Application < Rails::Application
-    ... ABRIDGED ...
-    config.middleware.delete Rack::Lock
-  end
-end
-```
-
-Open file Redmine/plugins/redmine_rt/Gemfile and uncomment the following line:
-```
-gem 'websocket-rails', git: 'https://github.com/recurser/websocket-rails', branch: 'bugfix/388-latest-faye-websocket'
-```
-
-Start server doing:
-```
-bundle install
-bundle exec rails server thin -e production -b 0.0.0.0 
-```
-Obs: for Redmine 3 you must use server thin. Other servers like puma or webrick will not work.
-
-
 Currently we just send notification of events (we don't send html fragments to clients) and this causes the client to update the page (making ajax calls if necessary).
 
 

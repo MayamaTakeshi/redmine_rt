@@ -7,6 +7,6 @@ gem 'render_parent', :git => "https://github.com/MayamaTakeshi/render_parent.git
 
 gem 'coffee-rails'
 
-gem 'puma', '~> 3.7'
+gem 'puma'
 
 gem 'thin', '~> 1.7.2'

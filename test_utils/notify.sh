@@ -8,7 +8,7 @@ function usage() {
 cat <<EOF
 
 Usage: $0 redmine_url api_token 'channel_id' 'notification_data'
-Ex:    $0 http://localhost:3000 3b188399dbca8b834145cf9ffe15f2fed8c3e3a6 "user:admin" '{"title": "Call from Pablo Picasso", "message": "Impatient customer. Hurry up!", "imageUrl": "https://cdn.dribbble.com/users/4385/screenshots/344648/picasso_icon.jpg", "buttons": [{"title": "Open customers details page", "command": "post_msg", "data": {"channel_name": "user:admin", "msg": {"command": "open_url", "data": {"url": "https://en.wikipedia.org/wiki/Pablo_Picasso"}}}}, {"title": "Open Issue", "command": "open_url", "data": {"url": "http://localhost:3000/issues/4"}}]}' 
+Ex:    $0 http://localhost:3000 3b188399dbca8b834145cf9ffe15f2fed8c3e3a6 "user:admin" '{"title": "Call from Pablo Picasso", "message": "Impatient customer. Hurry up!", "iconUrl": "https://cdn.dribbble.com/users/4385/screenshots/344648/picasso_icon.jpg", "buttons": [{"title": "Open customers details page", "command": "post_msg", "data": {"channel_name": "user:admin", "msg": {"command": "open_url", "data": {"url": "https://en.wikipedia.org/wiki/Pablo_Picasso"}}}}, {"title": "Open Issue", "command": "open_url", "data": {"url": "http://localhost:3000/issues/4"}}]}' 
 EOF
 }
 

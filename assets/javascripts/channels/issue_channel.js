@@ -136,7 +136,14 @@
           $(item).css('display', 'none');
   
           if( sorting == 'desc') {
-            $history.append(item);
+            var container = $("#tab-content-history");
+            if(container) {
+                // redmine 4.2 and newer
+                container.prepend(item);
+            } else {
+                // redmine 4.1 and older
+                $(item).insertBefore($history.find("h3"));
+            }
           } else {
             var container = $("#tab-content-history");
             if(container) {

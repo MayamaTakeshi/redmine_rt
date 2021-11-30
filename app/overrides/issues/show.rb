@@ -1,4 +1,12 @@
 Deface::Override.new(:virtual_path => 'issues/show',
+                     :name => "force history always",
+                     :replace => "#history") do
+"""<div id='history' data-comment_sorting='<%= User.current.wants_comments_in_reverse_order? ? 'asc' : 'desc' %>'>
+<%= render_tabs issue_history_tabs_for_redmine_rt, issue_history_default_tab %>
+</div>"""
+end
+
+Deface::Override.new(:virtual_path => 'issues/show',
                      :name => "add quick notes",
                      :insert_before => "#history") do
 """
@@ -48,10 +56,3 @@ $(document).ready(function() {
 end
 
 
-Deface::Override.new(:virtual_path => 'issues/show',
-                     :name => "force history always",
-                     :replace => "#history") do
-"""<div id='history' data-comment_sorting='<%= User.current.wants_comments_in_reverse_order? ? 'asc' : 'desc' %>'>
-<%= render_tabs issue_history_tabs_for_redmine_rt, issue_history_default_tab %>
-</div>"""
-end

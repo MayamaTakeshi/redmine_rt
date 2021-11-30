@@ -4,7 +4,7 @@
 # cable for redmine_rt
 
 if Rails::VERSION::MAJOR >= 5
-	mount ActionCable.server => '/cable' 
+	mount ActionCable.server => Redmine::Utils::relative_url_root + '/cable' 
 end
 
 get '/journals/:id', to: 'journals#show'

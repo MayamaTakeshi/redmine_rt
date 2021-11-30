@@ -92,5 +92,5 @@ There is a companion webextension that adds some extra features (but you need to
 Video demonstration:
 https://www.youtube.com/watch?v=XiHFAhs5o5M&feature=youtu.be
 
-UPDATE: the webextension is outdated and the mozilla and goggle stores will eventually remove it for no compliance with new policies. Consider it unavailable for the time being.
+UPDATE: the webextension is outdated and the mozilla and google stores will eventually remove it for no compliance with new policies. Consider it unavailable for the time being.
 

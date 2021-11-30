@@ -8,6 +8,8 @@ This plugin provides:
 
 This plugin works with Redmine 4 and above (https://github.com/redmine/redmine).
 
+(tested with 4.1.1 and 4.2.2)
+
 
 You must install dependency plugin redmine_base_deface:
 ```
@@ -25,6 +27,12 @@ Then:
 ```
 cd ..
 bundle install
+```
+
+Obs: if the above fails while installing nokogiri or puma, try to install them using gem:
+```
+gem install nokogiri
+gem install puma
 ```
 
 Then you need to setup your redmine server:
@@ -83,3 +91,6 @@ There is a companion webextension that adds some extra features (but you need to
 
 Video demonstration:
 https://www.youtube.com/watch?v=XiHFAhs5o5M&feature=youtu.be
+
+UPDATE: the webextension is outdated and the mozilla and goggle stores will eventually remove it for no compliance with new policies. Consider it unavailable for the time being.
+

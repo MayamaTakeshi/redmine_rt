@@ -103,7 +103,10 @@
       if(!indice) {
         indice = 1;
         if($last.length > 0) {
-          indice = parseInt($last.find("div[id|='note']").attr("id").split("-")[1]) + 1;
+          var journal_id = $last.find("div[id|='note']").attr("id");
+          if(journal_id) {	
+            indice = parseInt(journal_id.split("-")[1]) + 1;
+          }
         }
       }
   
@@ -129,12 +132,20 @@
           console.log("existing note");
           $("#note-" + indice).parent().replaceWith(item);
         } else {
+          console.log("new note");
           $(item).css('display', 'none');
   
           if( sorting == 'desc') {
             $history.append(item);
           } else {
-            $(item).insertAfter($history.find("h3"));
+            var container = $("#tab-content-history");
+            if(container) {
+                // redmine 4.2 and newer
+                container.append(item);
+            } else {
+                // redmine 4.1 and older
+                $(item).insertAfter($history.find("h3"));
+            }
           }
           $(item).show(800);
         }
@@ -154,7 +165,7 @@
       } else if(msg.type == "journal_saved") {
         var $item = $("#change-" + msg.journal_id);
         if($item.length == 0) {
-          console.log("element absent. Adding it")
+          console.log("element " + msg.journal_id + " absent. Adding it")
           add_or_update_note(msg.journal_id); 
           $("#last_journal_id").attr("value", msg.journal_id);
         } else {

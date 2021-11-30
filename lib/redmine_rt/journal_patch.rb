@@ -22,6 +22,7 @@ module RedmineRt
 
   module InstanceMethods
     def handle_journal_after_create
+      logger.debug "handle_journal_after_create"
       issue = Issue.find(self.journalized_id)
       if not issue then return end
 
@@ -37,11 +38,13 @@ module RedmineRt
     end
 
     def handle_journal_after_save
+      logger.debug "handle_journal_after_save"
       if self.journalized_type != 'Issue' then return end
       Broadcaster.broadcast "issue:#{self.journalized_id}",
         { event: 'journal ' + self.id.to_s +  ' saved', type: 'journal_saved', journal_id: self.id }
     end
     def handle_journal_after_destroy
+      logger.debug "handle_journal_after_destroy"
       if self.journalized_type != 'Issue' then return end
       Broadcaster.broadcast "issue:#{self.journalized_id}",
         { event: 'journal ' + self.id.to_s +  ' deleted', type: 'journal_deleted', journal_id: self.id }

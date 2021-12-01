@@ -14,7 +14,7 @@
     this.style.height = (this.scrollHeight) + 'px';
   });
   
-  if( $("#history").attr("data-comment_sorting") == "desc") {
+  if( $("#history").attr("data-comment_sorting") == "asc") {
     // move div quick_notes to bottom of div history
     $("#quick_notes").insertAfter( $("#history") );
   }

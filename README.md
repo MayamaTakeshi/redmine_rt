@@ -94,3 +94,20 @@ https://www.youtube.com/watch?v=XiHFAhs5o5M&feature=youtu.be
 
 UPDATE: the webextension is outdated and the mozilla and google stores will eventually remove it for no compliance with new policies. Consider it unavailable for the time being.
 
+
+In case you use redmine behind a proxy like nginx you will need to properly setup the proxy to handle websocket connections.
+Add something like this before the your location block for redmine:
+```
+        location = /redmine/cable {
+            proxy_set_header        Host            $host;
+            proxy_set_header        X-Real-IP       $remote_addr;
+            proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header        Upgrade         $http_upgrade;
+            proxy_set_header        Connection      $connection_upgrade;
+            proxy_http_version 1.1;
+            proxy_read_timeout 120;
+
+            proxy_pass http://YOUR_REDMINE_SERVER/redmine/cable;
+        }
+```
+

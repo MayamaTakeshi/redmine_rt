@@ -112,7 +112,7 @@ Add something like this before the your location block for redmine:
         }
 ```
 
-Here is a full sample contributed by @leoniscsem:
+Here is a full sample contributed by [@leoniscsem](https://github.com/leoniscsem):
 ```
 upstream puma_redmine {
    server unix:/path/to/redmine/tmp/puma.sock fail_timeout=0;

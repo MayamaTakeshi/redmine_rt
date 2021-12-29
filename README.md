@@ -81,6 +81,7 @@ The plugin adds an API endpoint /channels/CHANNEL_NAME/post_msg.json to permit t
   curl -v -x '' -u YOUR_API_TOKEN:fake -X POST -H 'Content-Type: application/json' http://REDMINE_IP_PORT/channels/sales/post_msg.json -d '{"msg": {"event": "customer_arrived"}}'
 
 
+Also, remember to logout and login once after these changes otherwise the redmine_rt features might not work.
 
 There is a companion webextension that adds some extra features (but you need to implement an app to publish messages):
 
@@ -111,3 +112,65 @@ Add something like this before the your location block for redmine:
         }
 ```
 
+Here is a full sample contributed by @leoniscsem:
+```
+upstream puma_redmine {
+   server unix:/path/to/redmine/tmp/puma.sock fail_timeout=0;
+   }
+
+server {
+  server_name redmine.domain.tld;
+  listen 80;
+  # Strict Transport Security
+  #add_header Strict-Transport-Security max-age=2592000;
+  return 301 https://$server_name:443$request_uri;
+  #rewrite ^/.*$ https://$host$request_uri? permanent;
+  }
+
+server {
+   server_name redmine.domain.tld;
+   listen 443 ssl http2;
+   root /path/to/redmine/public;
+
+   ssl_certificate /etc/letsencrypt/live/domain.tld/fullchain.pem;
+   ssl_certificate_key /etc/letsencrypt/live/domain.tld/privkey.pem;
+
+   access_log /var/log/nginx/redmine.access.log;
+   error_log /var/log/nginx/redmine.error.log;
+
+   location / {
+     try_files $uri $uri/index.html @app;
+   }
+
+   location = /cable {
+     proxy_set_header Host $host;
+     proxy_set_header X-Real-IP $remote_addr;
+     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header Upgrade $http_upgrade;
+     proxy_set_header Connection $connection_upgrade;
+     proxy_http_version 1.1;
+     proxy_read_timeout 120;
+     proxy_pass http://puma_redmine/cable;
+   }
+
+
+   location ^~ /assets/ {
+     gzip_static on;
+     expires max;
+     add_header Cache-Control public; 
+     proxy_set_header X-Forwarded-For $remote_addr;
+   }
+
+   location @app {
+     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header Host $http_host;
+     proxy_redirect off;
+     proxy_set_header X-Forwarded-Proto $scheme;
+
+     proxy_set_header X-Real-IP $remote_addr;
+     proxy_read_timeout 300;
+
+     proxy_pass http://puma_redmine;
+    }
+  }
+```

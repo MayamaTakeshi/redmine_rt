@@ -37,7 +37,7 @@ gem install puma
 
 Then you need to setup your redmine server:
 
-  Administration -> Authentication -> 
+  Administration -> Settings -> Authentication -> 
     "Autologin" must be enabled.
 
   Administration -> Settings -> API 

@@ -11,9 +11,9 @@ def prepare()
     Issue.send(:include, RedmineRt::IssuePatch)
   end
 
-  unless IssuesHelper.included_modules.include? RedmineRt::IssuesHelperPatch
+  #unless IssuesHelper.included_modules.include? RedmineRt::IssuesHelperPatch
     IssuesHelper.send(:include, RedmineRt::IssuesHelperPatch)
-  end
+  #end
 
   unless Journal.included_modules.include? RedmineRt::JournalPatch
     Journal.send(:include, RedmineRt::JournalPatch)
@@ -45,11 +45,11 @@ end
 
 Redmine::Plugin.register :redmine_rt do
   name 'Redmine Rt plugin'
-  author 'Author name'
-  description 'This is a plugin for Redmine'
-  version '0.0.1'
-  url 'http://example.com/path/to/plugin'
-  author_url 'http://example.com/about'
+  author 'MayamaTakeshi'
+  description 'Redmine plugin for realtime features'
+  version '1.0.0'
+  url 'https://github.com/MayamaTakeshi/redmine_rt'
+  author_url 'https://github.com/MayamaTakeshi'
   #requires_redmine :version_or_higher => '4.0.0'
   #requires_redmine :version => '3.4.2.devel' # Redmine currently doesn't accept this
   requires_redmine_plugin :redmine_base_deface, :version_or_higher => '0.0.1'

@@ -97,7 +97,7 @@ UPDATE: the webextension is outdated and the mozilla and google stores will even
 
 
 In case you use redmine behind a proxy like nginx you will need to properly setup the proxy to handle websocket connections.
-Add something like this before the your location block for redmine:
+Add something like this before your location block for redmine:
 ```
         location = /redmine/cable {
             proxy_set_header        Host            $host;
@@ -112,7 +112,7 @@ Add something like this before the your location block for redmine:
         }
 ```
 
-Here is a full sample contributed by [@leoniscsem](https://github.com/leoniscsem):
+Here is a full nginx.conf sample contributed by [@leoniscsem](https://github.com/leoniscsem):
 ```
 upstream puma_redmine {
    server unix:/path/to/redmine/tmp/puma.sock fail_timeout=0;

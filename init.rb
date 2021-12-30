@@ -11,9 +11,9 @@ def prepare()
     Issue.send(:include, RedmineRt::IssuePatch)
   end
 
-  #unless IssuesHelper.included_modules.include? RedmineRt::IssuesHelperPatch
+  unless IssuesHelper.included_modules.include? RedmineRt::IssuesHelperPatch
     IssuesHelper.send(:include, RedmineRt::IssuesHelperPatch)
-  #end
+  end
 
   unless Journal.included_modules.include? RedmineRt::JournalPatch
     Journal.send(:include, RedmineRt::JournalPatch)

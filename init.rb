@@ -2,17 +2,13 @@ require 'redmine'
 
 def prepare() 
   require_dependency 'issue'
-	require_dependency 'redmine_rt/channels_controller'
+  require_dependency 'redmine_rt/channels_controller'
 
   # Guards against including the module multiple time (like in tests)  
   # and registering multiple callbacks
 
   unless Issue.included_modules.include? RedmineRt::IssuePatch
     Issue.send(:include, RedmineRt::IssuePatch)
-  end
-
-  unless IssuesHelper.included_modules.include? RedmineRt::IssuesHelperPatch
-    IssuesHelper.send(:include, RedmineRt::IssuesHelperPatch)
   end
 
   unless Journal.included_modules.include? RedmineRt::JournalPatch

@@ -77,11 +77,20 @@ I recommend to use:
 as this will make "quick_notes" to be put above history section that I think looks better than having it below it when update of notes is done.
 
 
-The plugin adds an API endpoint /channels/CHANNEL_NAME/post_msg.json to permit to send messages to channels. Usage:
-  curl -v -x '' -u YOUR_API_TOKEN:fake -X POST -H 'Content-Type: application/json' http://REDMINE_IP_PORT/channels/sales/post_msg.json -d '{"msg": {"event": "customer_arrived"}}'
+The plugin adds an API endpoint /channels/CHANNEL_NAME/post_msg.json to permit to send messages to channels. 
 
+Usage:
+```
+  curl -v -x '' -u YOUR_API_TOKEN:fake -X POST -H 'Content-Type: application/json' http://REDMINE_IP_PORT/channels/sales/post_msg.json -d '{"msg": {"event": "customer_arrived"}}'
+```
+
+These messages can be received by apps or redmine pages subscribed to them.
 
 Also, remember to logout and login once after these changes otherwise the redmine_rt features might not work.
+
+Sample usage (thanks to [@leoniscsem](https://github.com/leoniscsem)):
+
+![Sample Usage](../assets/redmine_rt2.gif?raw=true)
 
 There is a companion webextension that adds some extra features (but you need to implement an app to publish messages):
 

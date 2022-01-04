@@ -26,15 +26,17 @@ module RedmineRt
       issue = Issue.find(self.journalized_id)
       if not issue then return end
 
-      data = {command: "show_notification", data: {title: "issue #{issue.id} (#{issue.subject}) has a new comment", message: self.notes[0..48]}}
-      [issue.author_id, issue.assigned_to_id].uniq.each {
-        | user_id |
-        if user_id and user_id != self.user_id then
-          # only notify if target user is the same as the author of the note
-          user = User.find(issue.author_id)
-          Broadcaster.broadcast "user:#{user.login}", data
-        end
-      }
+      if self.notes then
+        data = {command: "show_notification", data: {title: "issue #{issue.id} (#{issue.subject}) has a new comment", message: self.notes[0..48]}}
+        [issue.author_id, issue.assigned_to_id].uniq.each {
+          | user_id |
+          if user_id and user_id != self.user_id then
+            # only notify if target user is the same as the author of the note
+            user = User.find(issue.author_id)
+            Broadcaster.broadcast "user:#{user.login}", data
+          end
+        }
+      end
     end
 
     def handle_journal_after_save

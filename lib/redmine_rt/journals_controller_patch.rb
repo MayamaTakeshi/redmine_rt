@@ -56,16 +56,16 @@ module RedmineRt
         end
       end
 
-			def destroy
+      def destroy
         @journal = Journal.find(params[:id])
-				unless @journal.editable_by?(User.current)
-					raise ::Unauthorized
-				end
-				@journal.destroy
-				respond_to do |format|
-					format.api { render :nothing => true, :status => 204 }
-				end
-			end
+        unless @journal.editable_by?(User.current)
+          raise ::Unauthorized
+        end
+        @journal.destroy
+        respond_to do |format|
+           format.api { render :nothing => true, :status => 204 }
+        end
+      end
     end
   end
 end

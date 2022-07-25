@@ -1,8 +1,8 @@
 require 'redmine'
 
 def prepare() 
-  require_dependency 'issue'
-  require_dependency 'redmine_rt/channels_controller'
+  #require_dependency 'issue'
+  #require_dependency 'redmine_rt/channels_controller'
 
   # Guards against including the module multiple time (like in tests)  
   # and registering multiple callbacks
@@ -30,13 +30,19 @@ end
 
 Rails.application.config.action_cable.disable_request_forgery_protection = true
 
-require_dependency 'redmine_rt/channels/application_cable/connection'
-require_dependency 'redmine_rt/channels/application_cable/channel'
-require_dependency 'redmine_rt/channels/channel'
-require_dependency 'redmine_rt/broadcaster'
+#require_dependency 'redmine_rt/channels/application_cable/connection'
+#require_dependency 'redmine_rt/channels/application_cable/channel'
+#require_dependency 'redmine_rt/channels/channel'
+#require_dependency 'redmine_rt/broadcaster'
 
-ActiveSupport::Reloader.to_prepare do
-  prepare()
+if Rails.version > '6.0' && Rails.autoloaders.zeitwerk_enabled?
+  Rails.application.config.after_initialize do
+    prepare()
+  end
+else
+  ActiveSupport::Reloader.to_prepare do
+    prepare()
+  end
 end
 
 Redmine::Plugin.register :redmine_rt do

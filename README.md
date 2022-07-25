@@ -6,15 +6,19 @@ This plugin provides:
   - WebSocket endpoints to permit to subscribe to channels and send/receive messages thru them.
   
 
-This plugin works with Redmine 4 and above (https://github.com/redmine/redmine).
+This plugin works with Redmine 4 (https://github.com/redmine/redmine).
 
-(tested with 4.1.1 and 4.2.2)
+(tested with 4.1.1, 4.2.2 and 4.2.7)
+
+It currently doesn't work with Redmine 5.
 
 
 You must install dependency plugin redmine_base_deface:
 ```
 cd plugins
 git clone https://github.com/jbbarth/redmine_base_deface
+cd redmine_base_deface 
+git checkout 7ffa8fcb1364a0d22d5e219d0374942c946aec8f
 ```
 
 Install redmine_rt following usual plugin installation procedure:

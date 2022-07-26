@@ -4,13 +4,14 @@ This plugin provides:
   - Notification of issue changes (addition, removal, update of journals)
   - API method post_msg to permit to send message to channels
   - WebSocket endpoints to permit to subscribe to channels and send/receive messages thru them.
-  
 
-This plugin works with Redmine 4 and 5(https://github.com/redmine/redmine).
+It uses Ruby on Rails Action Cable to permit realtime notification of events (and for this, you need to have a redis-server installed somewhere).
+
+This plugin works with Redmine 4 and 5 (https://github.com/redmine/redmine).
 
 (tested with 4.1.1, 4.2.2, 4.2.7, 5.0.0 and 5.0.2)
 
-You must install dependency plugin redmine_base_deface:
+You must install dependency plugin redmine_base_deface (a different version is required depending on the Redmine version):
 ```
 cd plugins
 git clone https://github.com/jbbarth/redmine_base_deface
@@ -28,7 +29,7 @@ git checkout 9763e05ba9fe489308f7c18412a7cab819d90edf
 
 Install redmine_rt following usual plugin installation procedure:
 ```
-cd plugins
+cd ../plugins
 git clone https://github.com/MayamaTakeshi/redmine_rt
 ```
 

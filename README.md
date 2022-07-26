@@ -77,10 +77,16 @@ production:
 
 Start server doing:
 
+For Redmine 4:
 ```
 bundle exec rails server puma -e production -b 0.0.0.0
-
 ```
+
+For Redmine 5:
+```
+bundle exec rails server -e production -b 0.0.0.0
+```
+
 Currently we just send notification of events (we don't send html fragments to clients) and this causes the client to update the page (making ajax calls if necessary).
 
 

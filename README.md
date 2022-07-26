@@ -18,7 +18,15 @@ You must install dependency plugin redmine_base_deface:
 cd plugins
 git clone https://github.com/jbbarth/redmine_base_deface
 cd redmine_base_deface 
+```
+
+Then for Redmine 4 do:
+```
 git checkout 7ffa8fcb1364a0d22d5e219d0374942c946aec8f
+```
+and for Redmine 5 do:
+```
+git checkout 9763e05ba9fe489308f7c18412a7cab819d90edf
 ```
 
 Install redmine_rt following usual plugin installation procedure:
@@ -69,10 +77,16 @@ production:
 
 Start server doing:
 
+For Redmine 4:
 ```
 bundle exec rails server puma -e production -b 0.0.0.0
-
 ```
+
+For Redmine 5:
+```
+bundle exec rails server -e production -b 0.0.0.0
+```
+
 Currently we just send notification of events (we don't send html fragments to clients) and this causes the client to update the page (making ajax calls if necessary).
 
 

@@ -1,7 +1,7 @@
 (function() {
   var base_url = "";
 
-  $(window).load(function() {
+  $(window).on('load', function() {
 
   if(window.location.pathname.indexOf("/issues/") >= 0) {
     base_url = window.location.href.split("/issues/")[0];

@@ -6,12 +6,9 @@ This plugin provides:
   - WebSocket endpoints to permit to subscribe to channels and send/receive messages thru them.
   
 
-This plugin works with Redmine 4 (https://github.com/redmine/redmine).
+This plugin works with Redmine 4 and 5(https://github.com/redmine/redmine).
 
-(tested with 4.1.1, 4.2.2 and 4.2.7)
-
-It currently doesn't work with Redmine 5.
-
+(tested with 4.1.1, 4.2.2, 4.2.7, 5.0.0 and 5.0.2)
 
 You must install dependency plugin redmine_base_deface:
 ```
@@ -86,9 +83,6 @@ For Redmine 5:
 ```
 bundle exec rails server -e production -b 0.0.0.0
 ```
-
-Currently we just send notification of events (we don't send html fragments to clients) and this causes the client to update the page (making ajax calls if necessary).
-
 
 I recommend to use:
   "My account" > Preferences > "Display comments" = "In reverse chronological order"

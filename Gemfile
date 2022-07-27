@@ -9,4 +9,4 @@ gem 'coffee-rails'
 
 gem 'puma'
 
-gem 'thin', '~> 1.7.2'
+#gem 'thin', '~> 1.7.2'

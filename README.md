@@ -4,6 +4,7 @@ This plugin provides:
   - Notification of issue changes (addition, removal, update of journals)
   - API method post_msg to permit to send message to channels
   - WebSocket endpoints to permit to subscribe to channels and send/receive messages thru them.
+  - a text field to permit to quickly insert new comments ("Notes box") on an issue without having to reload the current issue page.
 
 It uses Ruby on Rails Action Cable to permit realtime notification of events (and for this, you need to have a redis-server installed somewhere).
 
@@ -27,7 +28,7 @@ and for Redmine 5 do:
 git checkout 9763e05ba9fe489308f7c18412a7cab819d90edf
 ```
 
-Install redmine_rt following usual plugin installation procedure:
+Install redmine_rt plugin:
 ```
 cd ../plugins
 git clone https://github.com/MayamaTakeshi/redmine_rt
@@ -39,12 +40,6 @@ cd ..
 bundle install
 ```
 
-Obs: if the above fails while installing nokogiri or puma, try to install them using gem:
-```
-gem install nokogiri
-gem install puma
-```
-
 Then you need to setup your redmine server:
 
   Administration -> Settings -> Authentication -> 
@@ -54,9 +49,12 @@ Then you need to setup your redmine server:
     "Enable REST web service" must be ON.
 
 
+Then install redis-server. In debian/ubuntu just do:
+```
+apt install redis-server
+```
 
-Then install redis-server.
-Then create file redmine/config/cable.yml with the following content:
+Then create file redmine/config/cable.yml with the following content (adjust the url if you are running redis-server on a separate machine):
 ```
 development:
   adapter: redis
@@ -87,7 +85,7 @@ bundle exec rails server -e production -b 0.0.0.0
 
 I recommend to use:
   "My account" > Preferences > "Display comments" = "In reverse chronological order"
-as this will make "quick_notes" to be put above history section that I think looks better than having it below it when update of notes is done.
+as this will make the Notes box to be put above history section that I think looks better than having it below it when update of notes is done.
 
 
 The plugin adds an API endpoint /channels/CHANNEL_NAME/post_msg.json to permit to send messages to channels. 

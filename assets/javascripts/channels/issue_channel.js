@@ -2,21 +2,6 @@
   var base_url = "";
 
   $(window).on('load', function() {
-      var bc = new BroadcastChannel("bc_issue")
-         bc.addEventListener("message", (event) => {
-           console.log(`issue bc_issue got message`)
-           console.log(`data: ${JSON.stringify(event.data)}`)
-           console.log(`origin: ${JSON.stringify(event.origin)}`)
-           console.log(`lastEventId: ${JSON.stringify(event.lastEventId)}`)
-           console.log(`source: ${JSON.stringify(event.source)}`)
-           console.log(`ports: ${JSON.stringify(event.ports)}`)
-           var msg = event.data
-           if(msg.type == 'anyone?' && window.location.href.startsWith(msg.url)) {
-              window.focus() 
-              bc.postMessage({type: 'i_have_it', uuid: msg.uuid})
-           }
-      })
-
       if(window.location.pathname.indexOf("/issues/") >= 0) {
         base_url = window.location.href.split("/issues/")[0];
       }

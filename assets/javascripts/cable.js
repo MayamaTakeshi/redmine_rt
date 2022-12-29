@@ -14,8 +14,8 @@
         base_url = url.split('/issues/')[0]
         channel_name = $('meta[name=page_specific_js]').attr('channel_name')
     } else if(url.endsWith('/realtime') || url.endsWith('realtime/')) {
-        base_url = url.split('/realtime')[0]
-        channel_name = "realtime"
+        var user_name = $('meta[name=page_specific_js]').attr('user_name')
+        channel_name = "user:" + user_name
     }
 
     App.cable = ActionCable.createConsumer(base_url + "/cable");

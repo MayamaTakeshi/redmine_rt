@@ -101,6 +101,14 @@ Things attempted when trying to implement focus on existing tab for #13:
     issue_channel.js?1672351776:16 Uncaught DOMException: Failed to execute 'postMessage' on 'BroadcastChannel': #<Window> could not be cloned.
   - use alert() to see if it force focus on the current window: it doesn't work
   
+========================================================
+2022/12/30 takeshi:
+
+Sample curl command to popup issue:
+
+curl -v -x '' -u YOUR_API_TOKEN:dummy -X POST -H 'Content-Type: application/json' http://0.0.0.0:3000/channels/user:admin/post_msg.json -d '{"command": "open_url", "data": {"url": "http://192.168.225.201:3000/issues/2"}}'
+
+
 
 
 

@@ -35,7 +35,7 @@ else
   #require_dependency 'redmine_rt/channels/channel'
   require_dependency 'redmine_rt/broadcaster'
   require_dependency 'issue'
-  require_dependency 'redmine_rt/channels_controller'
+  #require_dependency 'redmine_rt/channels_controller'
 
   ActiveSupport::Reloader.to_prepare do
     prepare()

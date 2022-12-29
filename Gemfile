@@ -7,6 +7,6 @@ gem 'render_parent', '~> 0.1.0'
 
 gem 'coffee-rails'
 
-gem 'puma'
+#gem 'puma'
 
 #gem 'thin', '~> 1.7.2'

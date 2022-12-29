@@ -49,7 +49,7 @@
             var url = `${window.location.href.split("/realtime")[0]}/issues/${m.msg.issue_id}`
             console.log(`url to open after timeout ${url}`)
             var item = setTimeout(() => {
-              window.open(url, '_blank')
+              window.open(url, '_blank').focus()
             }, 250)
             var uuid = generateUUID()
             bc.postMessage({

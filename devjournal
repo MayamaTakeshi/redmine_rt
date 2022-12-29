@@ -91,5 +91,17 @@ Did you mean?  parse_sections
 Regarding #13, it seems it is not possible for a tab to set focus to itself.
 So for now we are just opening tabs even if a tab with the url already exists.
 
+========================================================
+2022/12/30 takeshi:
+
+Things attempted when trying to implement focus on existing tab for #13:
+  - According to docs (https://developer.mozilla.org/en-US/docs/Web/API/Window/focus), window.focus() might work if allowed by user configuration. So it is not usable as it is better to open tabs even if duplicated instead of not focusing at all.
+  - pass reference of current issue tab to the realtime tab with: BroadcastChannel.postMessage({window: window, ...}) so that realtime tab could try to do msg.window.focus(). 
+    This fails with:
+    issue_channel.js?1672351776:16 Uncaught DOMException: Failed to execute 'postMessage' on 'BroadcastChannel': #<Window> could not be cloned.
+  - use alert() to see if it force focus on the current window: it doesn't work
+  
+
+
 
 

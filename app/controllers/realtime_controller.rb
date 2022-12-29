@@ -1,0 +1,3 @@
+class RealtimeController < ApplicationController
+
+end

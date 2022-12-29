@@ -20,3 +20,5 @@ get '/channels/session_info', to: 'channels#session_info'
 post '/channels/:id/post_msg', to: 'channels#post_msg'
 
 post '/channels/:id/post_msg_by_session', to: 'channels#post_msg_by_session'
+
+get '/realtime', to: 'realtime#index'

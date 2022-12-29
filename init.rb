@@ -30,9 +30,9 @@ Rails.application.config.action_cable.disable_request_forgery_protection = true
 if Rails.version > '6.0' && Rails.autoloaders.zeitwerk_enabled?
   prepare()
 else
-  require_dependency 'redmine_rt/channels/application_cable/connection'
-  require_dependency 'redmine_rt/channels/application_cable/channel'
-  require_dependency 'redmine_rt/channels/channel'
+  #require_dependency 'redmine_rt/channels/application_cable/connection'
+  #require_dependency 'redmine_rt/channels/application_cable/channel'
+  #require_dependency 'redmine_rt/channels/channel'
   require_dependency 'redmine_rt/broadcaster'
   require_dependency 'issue'
   require_dependency 'redmine_rt/channels_controller'
@@ -46,7 +46,7 @@ Redmine::Plugin.register :redmine_rt do
   name 'Redmine Rt plugin'
   author 'MayamaTakeshi'
   description 'Redmine plugin for realtime features'
-  version '1.1.0'
+  version '1.1.1'
   url 'https://github.com/MayamaTakeshi/redmine_rt'
   author_url 'https://github.com/MayamaTakeshi'
   #requires_redmine :version_or_higher => '4.0.0'

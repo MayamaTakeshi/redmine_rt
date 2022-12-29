@@ -10,7 +10,7 @@ It uses Ruby on Rails Action Cable to permit realtime notification of events (an
 
 This plugin works with Redmine 4 and 5 (https://github.com/redmine/redmine).
 
-(tested with 4.1.1, 4.2.2, 4.2.7, 5.0.0 and 5.0.2)
+(tested with 4.1.1, 4.2.2, 4.2.7, 4.2.9, 5.0.0, 5.0.2 and 5.0.4)
 
 You must install dependency plugin redmine_base_deface (a different version is required depending on the Redmine version):
 ```

@@ -1,3 +1,19 @@
+<% content_for :header_tags do %>
+  <%= tag :meta, name: :page_specific_js, channel_name: "realtime" %>
+
+  <% if Rails::VERSION::MAJOR >= 5 %>
+    <%= javascript_include_tag(:action_cable, :plugin => 'redmine_rt') %>
+    <%= javascript_include_tag(:cable, :plugin => 'redmine_rt') %>
+  <% else %>
+    <%= javascript_include_tag(:websocket_rails, :plugin => 'redmine_rt') %>
+    <%= javascript_include_tag(:dispatcher, :plugin => 'redmine_rt') %>
+  <% end %>
+
+  <%= javascript_include_tag("channels/realtime_channel.js", :plugin => 'redmine_rt') %>
+
 <h2>Realtime</h2>
 
 <h3>Keep this tab open so that issues can be open automatically when a call is answered</h3>
+
+<% end %>
+

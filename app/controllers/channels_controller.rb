@@ -1,4 +1,4 @@
-class RedmineRt::ChannelsController < ApplicationController
+class ChannelsController < ApplicationController
   accept_api_auth :post_msg
 
   skip_before_action :check_if_login_required, :check_password_change, :only => [:info, :session_info]

@@ -85,3 +85,11 @@ Did you mean?  parse_sections
                due_date_distance_in_words                                                                                                                                                                  
                paginate):                                                                                                                                                                                  
 
+========================================================
+2022/12/29 takeshi:
+
+Regarding #13, it seems it is not possible for a tab to set focus to itself.
+So for now we are just opening tabs even if a tab with the url already exists.
+
+
+

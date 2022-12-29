@@ -2,76 +2,85 @@
   var base_url = "";
 
   $(window).on('load', function() {
+      var bc = new BroadcastChannel("bc_issue")
+         bc.addEventListener("message", (event) => {
+           console.log(`issue bc_issue got ${JSON.stringify(event.data)}`)
+           var msg = event.data
+           if(msg.type == 'anyone?' && window.location.href.startsWith(msg.url)) {
+              window.focus() 
+              bc.postMessage({type: 'i_have_it', uuid: msg.uuid})
+           }
+      })
 
-  if(window.location.pathname.indexOf("/issues/") >= 0) {
-    base_url = window.location.href.split("/issues/")[0];
-  }
-  
-  $('#quick_notes_ta').each(function () {
-    this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
-  }).on('input', function () {
-    this.style.height = 'auto';
-    this.style.height = (this.scrollHeight) + 'px';
-  });
-  
-  if( $("#history").attr("data-comment_sorting") == "asc") {
-    // move div quick_notes to bottom of div history
-    $("#quick_notes").insertAfter( $("#history") );
-  }
+      if(window.location.pathname.indexOf("/issues/") >= 0) {
+        base_url = window.location.href.split("/issues/")[0];
+      }
+      
+      $('#quick_notes_ta').each(function () {
+        this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+      }).on('input', function () {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+      });
+      
+      if( $("#history").attr("data-comment_sorting") == "asc") {
+        // move div quick_notes to bottom of div history
+        $("#quick_notes").insertAfter( $("#history") );
+      }
 
-  App.show_modal = function(id) {
-    $( id ).dialog({
-      modal: true,
-      buttons: {
-        Ok: function() {
-          $( this ).dialog( "close" );
+      App.show_modal = function(id) {
+        $( id ).dialog({
+          modal: true,
+          buttons: {
+            Ok: function() {
+              $( this ).dialog( "close" );
+            }
+          }
+        });
+      }
+      
+      console.log("SETTING ON CLICK");
+      $('#quick_notes_btn').click(function(e) {
+        console.log("clicked");
+        e.stopPropagation();
+        e.preventDefault();
+        if (e.handled == true) {
+          return;
         }
-      }
-    });
-  }
-  
-  console.log("SETTING ON CLICK");
-  $('#quick_notes_btn').click(function(e) {
-    console.log("clicked");
-    e.stopPropagation();
-    e.preventDefault();
-    if (e.handled == true) {
-      return;
-    }
-    e.handled = true;
-    var $ta = $('#quick_notes_ta');
-    if($ta.val().trim() == '') {
-      return;
-    }
-    var data = {
-      issue: {
-        notes: $ta.val(),
-        private_notes: $("#quick_notes_private_cbox").is(":checked") ? true : false
-      }
-    };
-  
-    console.log("sending PUT");
+        e.handled = true;
+        var $ta = $('#quick_notes_ta');
+        if($ta.val().trim() == '') {
+          return;
+        }
+        var data = {
+          issue: {
+            notes: $ta.val(),
+            private_notes: $("#quick_notes_private_cbox").is(":checked") ? true : false
+          }
+        };
+      
+        console.log("sending PUT");
 
-    var issue_id = window.location.pathname.split("/issues/")[1].split("?")[0];
-    $.ajax({
-      url: base_url + "/issues/" + issue_id + "/add_quick_notes",
-      method: 'PUT',
-      dataType: "text", // Expected type of server response body
-      contentType: 'application/json; charset=utf-8',
-      data: JSON.stringify(data),
-      success: function(response) {
-        console.log("PUT succcess");
-        $ta.val('');
-        $ta.removeData('changed');
-      },
-      error: function(textStatus, err) {
-        console.log("PUT failed: " + textStatus);
-        console.dir(err);
-  
-        App.show_modal("#operation_failed_message");
-      }
-    });
-  });
+        var issue_id = window.location.pathname.split("/issues/")[1].split("?")[0];
+        $.ajax({
+          url: base_url + "/issues/" + issue_id + "/add_quick_notes",
+          method: 'PUT',
+          dataType: "text", // Expected type of server response body
+          contentType: 'application/json; charset=utf-8',
+          data: JSON.stringify(data),
+          success: function(response) {
+            console.log("PUT succcess");
+            $ta.val('');
+            $ta.removeData('changed');
+          },
+          error: function(textStatus, err) {
+            console.log("PUT failed: " + textStatus);
+            console.dir(err);
+      
+            App.show_modal("#operation_failed_message");
+          }
+        });
+      });
   });
   
   if(window.location.pathname.indexOf("/issues/") >= 0) {

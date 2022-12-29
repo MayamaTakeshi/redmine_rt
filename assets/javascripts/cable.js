@@ -7,13 +7,22 @@
 
   App.ws_setup = function(event_handler) {
 
-    var base_url = window.location.href.split("/issues/")[0]
+    var url = window.location.href
+    var base_url = ""
+    var channel_name = ""
+    if(url.includes('/issues/')) {
+        base_url = url.split('/issues/')[0]
+        channel_name = $('meta[name=page_specific_js]').attr('channel_name')
+    } else if(url.endsWith('/realtime') || url.endsWith('realtime/')) {
+        base_url = url.split('/realtime')[0]
+        channel_name = "realtime"
+    }
 
     App.cable = ActionCable.createConsumer(base_url + "/cable");
 
     App.cable.subscriptions.create({
       channel: 'Channel',
-      name: $('meta[name=page_specific_js]').attr('channel_name')
+      name: channel_name
     }, 
     {
     	received: event_handler

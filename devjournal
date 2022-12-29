@@ -1,3 +1,4 @@
+========================================================
 2017/09/03 takeshi:
 
 Here is how redmine was installed on Ubuntu 14.04 Desktop for development:
@@ -62,4 +63,25 @@ And add this to redmine_rt/Gemfile:
   gem 'redis', '~> 3.0'
 Then updated:
   bundle
+
+========================================================
+2022/12/29 takeshi:
+
+To write logs to STDOUT when using '-e production' set RAILS_LOG_TO_STDOUT.
+
+This is necessary for example to check issues with zeitwerk when issues only happen in production mode but not in development mode.
+
+Ex:
+
+[root@lab225201-basix redmine]$ RAILS_LOG_TO_STDOUT=1 bundle exec rails server -e production -b 0.0.0.0
+...ABRIDGED ...
+I, [2022-12-29T15:41:44.985142 #2404616]  INFO -- : Registered connection (Z2lkOi8vcmVkbWluZS1hcHAvVXNlci8x)
+I, [2022-12-29T15:41:45.039131 #2404616]  INFO -- : Channel is streaming from issue:2      
+I, [2022-12-29T15:41:46.381898 #2404616]  INFO -- : [73b8e8a6-16cf-4380-b26b-1db51afcc44a] Started PUT "/issues/2/add_quick_notes" for 192.168.181.113 at 2022-12-29 15:41:46 +0900
+F, [2022-12-29T15:41:46.391644 #2404616] FATAL -- : [73b8e8a6-16cf-4380-b26b-1db51afcc44a]                                                                                                                 
+[73b8e8a6-16cf-4380-b26b-1db51afcc44a] AbstractController::ActionNotFound (The action 'add_quick_notes' could not be found for IssuesController
+Did you mean?  parse_sections                                                                        
+               query_hidden_tags                                                                                                                                                                           
+               due_date_distance_in_words                                                                                                                                                                  
+               paginate):                                                                                                                                                                                  
 

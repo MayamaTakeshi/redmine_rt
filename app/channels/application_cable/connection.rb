@@ -21,7 +21,7 @@ module ApplicationCable
         if not token then
           request.params[:unauthorized] = true
           return
-	end
+    end
 
         if token and (verified_user = User.find(token.user_id)) then
           return verified_user
@@ -30,5 +30,11 @@ module ApplicationCable
           return verified_user
         end
       end
+  end
+
+  private
+
+  def report_error(e)
+    puts("ApplicationCable::Connection report_error" + e)
   end
 end

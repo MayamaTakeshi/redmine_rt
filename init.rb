@@ -28,9 +28,7 @@ end
 Rails.application.config.action_cable.disable_request_forgery_protection = true
 
 if Rails.version > '6.0' && Rails.autoloaders.zeitwerk_enabled?
-  Rails.application.config.after_initialize do
-    prepare()
-  end
+  prepare()
 else
   require_dependency 'redmine_rt/channels/application_cable/connection'
   require_dependency 'redmine_rt/channels/application_cable/channel'

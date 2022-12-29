@@ -12,7 +12,7 @@
     App.cable = ActionCable.createConsumer(base_url + "/cable");
 
     App.cable.subscriptions.create({
-      channel: 'RedmineRt::Channel',
+      channel: 'Channel',
       name: $('meta[name=page_specific_js]').attr('channel_name')
     }, 
     {

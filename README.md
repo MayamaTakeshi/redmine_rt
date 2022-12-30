@@ -103,7 +103,7 @@ Sample usage (thanks to [@leoniscsem](https://github.com/leoniscsem)):
 
 ![Sample Usage](../assets/redmine_rt2.gif?raw=true)
 
-There is a companion webextension that adds some extra features (but you need to implement an app to publish messages):
+There is a companion webextension that adds some extra features like integration with PBXes (but you need to implement an app to publish messages):
 
   https://addons.mozilla.org/en-US/firefox/addon/redmine_rt/
   
@@ -114,6 +114,10 @@ Video demonstration:
 https://www.youtube.com/watch?v=XiHFAhs5o5M&feature=youtu.be
 
 UPDATE: the webextension is outdated and the mozilla and google stores will eventually remove it for no compliance with new policies. Consider it unavailable for the time being.
+
+As an alternative, we added a new page "realtime" that if left open, can receive requests from PBXs to open issue tabs when calls are answered.
+Video demonstration:
+https://www.youtube.com/watch?v=1O_XvIC5yhE
 
 
 In case you use redmine behind a proxy like nginx you will need to properly setup the proxy to handle websocket connections.

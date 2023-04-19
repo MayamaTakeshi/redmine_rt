@@ -12,6 +12,24 @@ This plugin works with Redmine 4 and 5 (https://github.com/redmine/redmine).
 
 (tested with 4.1.1, 4.2.2, 4.2.7, 4.2.9, 5.0.0, 5.0.2, 5.0.4 and 5.0.5)
 
+Install dependency:
+
+You must install dependency plugin redmine_base_deface (a different version is required depending on the Redmine version):
+```
+cd plugins
+git clone https://github.com/jbbarth/redmine_base_deface
+cd redmine_base_deface 
+```
+
+Then for Redmine 4 do:
+```
+git checkout 7ffa8fcb1364a0d22d5e219d0374942c946aec8f
+```
+and for Redmine 5 do:
+```
+git checkout 92c0e5706dfeead50b0972aaa50ec19ed5465bd4
+```
+
 Installation:
 
 ```
@@ -180,3 +198,11 @@ server {
   }
 ```
 
+Obs: if you use other plugins like Additionals and Additional Tags that use gem deface, they might conflict with the deface version used by redmine_base_deface.
+
+In this case, you could try updating the deface version in plugins/redmine_base_deface/PluginGemfile like this:
+```
+#gem 'deface', '1.6.2'
+gem 'deface', '1.8.1'
+```
+Then do 'bundle install' and after that, there should be no conflict anymore (see #20).

@@ -8,4 +8,4 @@ gem 'coffee-rails'
 
 #gem 'thin', '~> 1.7.2'
 
-gem 'redmine_plugin_kit'
+#gem 'redmine_plugin_kit'

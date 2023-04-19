@@ -115,7 +115,7 @@ GEM
       racc (~> 1.4)
     polyglot (0.3.5)
     racc (1.6.2)
-    rack (2.2.5)
+    rack (2.2.6.4)
     rack-test (2.0.2)
       rack (>= 1.3)
     rails (7.0.4.3)

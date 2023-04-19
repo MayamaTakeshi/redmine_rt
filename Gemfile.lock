@@ -1,4 +1,5 @@
 GEM
+  remote: https://rubygems.org/
   specs:
     actioncable (7.0.4)
       actionpack (= 7.0.4)
@@ -73,24 +74,33 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.2)
     crass (1.0.6)
     date (3.3.3)
+    deface (1.9.0)
+      actionview (>= 5.2)
+      nokogiri (>= 1.6)
+      polyglot
+      railties (>= 5.2)
+      rainbow (>= 2.1.0)
     erubi (1.12.0)
     execjs (2.8.1)
-    globalid (1.0.0)
+    globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    mail (2.7.1)
+    mail (2.8.1)
       mini_mime (>= 0.1.1)
+      net-imap
+      net-pop
+      net-smtp
     marcel (1.0.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
-    minitest (5.16.3)
+    minitest (5.18.0)
     net-imap (0.3.4)
       date
       net-protocol
@@ -100,9 +110,10 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
-    nio4r (2.5.8)
+    nio4r (2.5.9)
     nokogiri (1.13.10-x86_64-linux)
       racc (~> 1.4)
+    polyglot (0.3.5)
     racc (1.6.2)
     rack (2.2.5)
     rack-test (2.0.2)
@@ -133,13 +144,15 @@ GEM
       rake (>= 12.2)
       thor (~> 1.0)
       zeitwerk (~> 2.5)
+    rainbow (3.1.1)
     rake (13.0.6)
     redis (3.3.5)
-    render_parent (0.1.0)
-      rails (>= 2.3.0)
+    redmine_plugin_kit (1.0.4)
+      deface (= 1.9.0)
+      rails
     thor (1.2.1)
-    timeout (0.3.1)
-    tzinfo (2.0.5)
+    timeout (0.3.2)
+    tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
@@ -152,7 +165,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails
   redis (~> 3.0)
-  render_parent (~> 0.1.0)
+  redmine_plugin_kit
 
 BUNDLED WITH
    2.4.1

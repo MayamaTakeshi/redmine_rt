@@ -1,3 +1,5 @@
+module Issues::Show
+
 Deface::Override.new(:virtual_path => 'issues/show',
                      :name => "force history always",
                      :replace => "#history") do
@@ -65,4 +67,4 @@ $(document).ready(function() {
 """
 end
 
-
+end

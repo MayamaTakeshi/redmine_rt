@@ -51,7 +51,7 @@ Redmine::Plugin.register :redmine_rt do
   author_url 'https://github.com/MayamaTakeshi'
   #requires_redmine :version_or_higher => '4.0.0'
   #requires_redmine :version => '3.4.2.devel' # Redmine currently doesn't accept this
-  requires_redmine_plugin :redmine_base_deface, :version_or_higher => '0.0.1'
+  #requires_redmine_plugin :redmine_base_deface, :version_or_higher => '0.0.1'
 
   menu :top_menu, :realtime, {controller: 'realtime', action: 'index'}, caption: 'Realtime'
 end

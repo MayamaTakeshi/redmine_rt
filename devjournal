@@ -109,6 +109,26 @@ Sample curl command to popup issue:
 curl -v -x '' -u YOUR_API_TOKEN:dummy -X POST -H 'Content-Type: application/json' http://0.0.0.0:3000/channels/user:admin/post_msg.json -d '{"command": "open_url", "data": {"url": "http://192.168.225.201:3000/issues/2"}}'
 
 
+========================================================
+2023/04/19 takeshi:
+
+Regarding render_parent:
+  https://github.com/anteo/render-parent
+  https://www.redmine.org/boards/3/topics/33949
+
+we used it in the past to generate javascript tags for issue view to open websocket connection.
+So in app/views/issues/show.html.erb we would have our javascript and then a call to render_parent to render the original issue view.
+However, it was reported (#20) that plugins Additionals and Additional Tags could not be used due to conflict with deface version 1.8.1 used by these plugins and the one used by redmine_base_deface (1.6.2).
+So, I tried modifying redmine_base_deface/PluginGemfile with:
+gem 'deface', '1.8.1'
+but this caused our render_parent approch to stop working.
+
+However, eventually I managed to make all the necessary changes using 
+app/overrides/issues/show.rb
+
+and app/views/issues/show.html.erb was not needed anymore.
+So I removed render_parent from Gemfile.
+
 
 
 

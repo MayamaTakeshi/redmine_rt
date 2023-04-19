@@ -38,6 +38,16 @@ Deface::Override.new(:virtual_path => 'issues/show',
   </p>
 </div>
 
+<% content_for :header_tags do %>
+  <%= tag :meta, name: :page_specific_js, channel_name: 'issue:' + @issue.id.to_s %>
+
+  <%= javascript_include_tag(:action_cable, :plugin => 'redmine_rt') %>
+  <%= javascript_include_tag(:cable, :plugin => 'redmine_rt') %>
+
+  <%= javascript_include_tag('channels/issue_channel.js', :plugin => 'redmine_rt') %>
+
+<% end %>
+
 <%= javascript_tag \"
 
 $(document).ready(function() {

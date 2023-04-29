@@ -2,7 +2,6 @@ class QuickNotesController < ApplicationController
   unloadable
 
   before_action :find_issue_by_id
-  #before_action :authorize
   helper :issues
 
   def add

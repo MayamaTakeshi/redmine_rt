@@ -64,6 +64,9 @@ For Redmine 5:
 bundle exec rails server -e production -b 0.0.0.0
 ```
 
+Obs: do not use webrick as it will not work properly with WebSocket/ActionCable (you will see something like 'NotImplementedError (only partial hijack is supported.)')
+
+
 I recommend to use:
   "My account" > Preferences > "Display comments" = "In reverse chronological order"
 as this will make the Notes box to be put above history section that I think looks better than having it below it when update of notes is done.

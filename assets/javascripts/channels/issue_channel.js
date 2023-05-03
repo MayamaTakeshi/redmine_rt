@@ -82,13 +82,40 @@
         item.remove();
       });
     };
+
+    var item_is_visible = function (selectedTabId, item) {
+      //item is an array of dom elements. We need to reach the div.journal
+      var div = $(item).filter('div.journal').first();
+      if(selectedTabId == "tab-notes") {
+        console.log("using tab-notes")
+        if($(div).hasClass("has-notes")) {
+          console.log("hasClass has-notes")
+          return true
+        } else {
+          console.log("not hasClass has-notes")
+          return false
+        }
+      } else if(selectedTabId == "tab-properties") {
+        console.log("using tab-properties")
+        if($(div).hasClass("has-details")) {
+          console.log("hasClass has-details")
+          return true
+        } else {
+          console.log("not hasClass has-details")
+          return false
+        }
+      } else {
+        return true
+      }
+    }
   
     var add_or_update_note = function(id, indice) {
+
       var $history = $("#history");
   
       var sorting = $history.attr('data-comment_sorting');
   
-      var existing_note = indice != null ? true : false;
+      var existing_item = indice != null ? true : false;
   
       var last;
   
@@ -129,11 +156,12 @@
         });
         */
   
-        if(existing_note) {
-          console.log("existing note");
+        if(existing_item) {
+          console.log("existing item");
           $("#note-" + indice).parent().replaceWith(item);
         } else {
-          console.log("new note");
+          console.log("new item");
+          // new item must start as hidden and then we will show it gradually.
           $(item).css('display', 'none');
   
           if( sorting == 'desc') {
@@ -155,7 +183,16 @@
                 $(item).insertAfter($history.find("h3"));
             }
           }
-          $(item).show(800);
+
+          var selectedTabId = $("#history .tabs ul li a.selected").attr("id");
+          console.log("selectedTabId", selectedTabId);
+          if(item_is_visible(selectedTabId, item)) {
+            console.log("new item is visible");
+            //show new item gradually
+            $(item).show(800);
+          } else {
+            console.log("new item is not visible");
+          }
         }
       }).fail(function(jqXHR, error, reason) {
         console.log(error)

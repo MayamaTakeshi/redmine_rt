@@ -5,7 +5,13 @@ Deface::Override.new(:virtual_path => 'issues/show',
                      :replace => "#history") do
 """<div id='history' data-comment_sorting='<%= User.current.wants_comments_in_reverse_order? ? 'desc' : 'asc' %>'>
 <%= render_tabs issue_history_tabs_for_redmine_rt, issue_history_default_tab %>
-</div>"""
+</div>
+
+<%= stylesheet_link_tag 'my_styles', plugin: 'redmine_rt' %>
+
+<div id='message-container'></div>
+
+"""
 end
 
 Deface::Override.new(:virtual_path => 'issues/show',

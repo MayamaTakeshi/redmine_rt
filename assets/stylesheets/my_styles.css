@@ -1,0 +1,30 @@
+.message-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  max-width: 300px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.message {
+  position: relative;
+  margin: 10px;
+  padding: 10px;
+  font-size: 12px;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(255, 204, 128, 0.4);
+  display: flex;
+  align-items: center;
+
+  background-color: #dfffdf;
+  border-color: #9fcf9f;
+  color: #005f00;
+}
+
+.message-dismiss {
+  margin-left: auto;
+  cursor: pointer;
+}
+

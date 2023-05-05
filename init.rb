@@ -42,6 +42,10 @@ else
   end
 end
 
+Rails.configuration.to_prepare do
+  Redmine::Plugin.find(:redmine_rt).assets_paths << File.expand_path('assets', __dir__)
+end
+
 Redmine::Plugin.register :redmine_rt do
   name 'Redmine Rt plugin'
   author 'MayamaTakeshi'

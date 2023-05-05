@@ -1,6 +1,42 @@
 (function() {
   var base_url = "";
 
+  const adjustMessage = ($message) => {
+    $message.find('.journal-actions, .journal-link').remove();
+    $message.find("h4").contents().unwrap();
+  }
+
+  const showMessage = (message) => {
+    var $messageContainer = $(`<div class='message-container'></div>`);
+    var $message = $(`<div class='message'>${message}<span class='message-dismiss'>&times;</span></div>`);
+    adjustMessage($message)
+
+    console.log("message", $message.html())
+
+    $message.appendTo($messageContainer);
+    $messageContainer.appendTo('body');
+    $message.hide().fadeIn(1000);
+
+    var timeout = setTimeout(function() {
+      $message.fadeOut(function() {
+        $message.remove();
+        if ($('.message').length == 0) {
+          $messageContainer.remove();
+        }
+      });
+    }, 30000);
+
+    $('.message-dismiss').click(function() {
+      clearTimeout(timeout);
+      $(this).closest('.message').fadeOut(function() {
+        $(this).remove();
+        if ($('.message').length == 0) {
+          $messageContainer.remove();
+        }
+      });
+    });
+  }
+
   $(window).on('load', function() {
       if(window.location.pathname.indexOf("/issues/") >= 0) {
         base_url = window.location.href.split("/issues/")[0];
@@ -145,6 +181,8 @@
         $("#issue_lock_version").attr("value", lock_version);
   
         var item = $.parseHTML(data);
+
+        //showMessage(data);
 
         /*
         $(item).find('a').each(function() {

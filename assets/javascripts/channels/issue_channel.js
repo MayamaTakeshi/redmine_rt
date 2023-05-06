@@ -207,16 +207,6 @@
 
         showMessage(data);
 
-        /*
-        $(item).find('a').each(function() {
-          var audio_suffixes = ['wav', 'mp3', 'ogg'];
-          var suffix = $(this).attr('href').split('.').pop();
-          if(audio_suffixes.indexOf(suffix) >= 0) {
-            $(this).replaceWith("<audio controls preload='none'><source src=" + $(this).attr('href') + "/></audio>")
-          }
-        });
-        */
-  
         if(existing_item) {
           console.log("existing item");
           $("#note-" + indice).parent().replaceWith(item);

@@ -56,20 +56,6 @@ Deface::Override.new(:virtual_path => 'issues/show',
 
 <% end %>
 
-<%= javascript_tag \"
-
-$(document).ready(function() {
-
-  $('a').each(function() {
-    var audio_suffixes = ['wav', 'mp3', 'ogg'];
-    var suffix = $(this).attr('href').split('.').pop();
-    if(audio_suffixes.indexOf(suffix) >= 0) {
-      $(this).replaceWith('<audio controls preload=' + String.fromCharCode(39) + 'none' + String.fromCharCode(39) + '><source src=' + $(this).attr('href') + '/></audio>')
-    }
-  });
-})
-
-\" %>
 """
 end
 

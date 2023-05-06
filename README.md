@@ -1,7 +1,7 @@
 # redmine_rt (Redmine Real-Time plugin)
 
 This plugin provides:
-  - Notification of issue changes (addition, removal, update of journals)
+  - Notification of issue changes (addition, removal, update of journals).
   - API method post_msg to permit to send message to channels
   - WebSocket endpoints to permit to subscribe to channels and send/receive messages thru them.
   - a text field to permit to quickly insert new comments ("Notes box") on an issue without having to reload the current issue page.
@@ -67,7 +67,7 @@ bundle exec rails server -e production -b 0.0.0.0
 Obs: do not use webrick as it will not work properly with WebSocket/ActionCable (you will see something like 'NotImplementedError (only partial hijack is supported.)')
 
 
-I recommend to use:
+Regarding Redmine configuration, I recommend to use:
   "My account" > Preferences > "Display comments" = "In reverse chronological order"
 as this will make the Notes box to be put above history section that I think looks better than having it below it when update of notes is done.
 

@@ -6,14 +6,23 @@
   z-index: 9999;
 }
 
+.message-box {
+  height: 0;
+  overflow: auto;
+}
+
 .message {
-  position: relative;
+  /*position: relative;*/
   margin: 10px;
   padding: 10px;
-  font-size: 12px;
+  font-size: 10px;
   border-radius: 5px;
   display: flex;
   align-items: center;
+  /*
+  height: 0;
+  overflow: hidden;
+  */
 
   background-color: #dfffdf;
   border-color: #9fcf9f;
@@ -21,41 +30,7 @@
 
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   margin-bottom: 15px;
-  animation: grow 0.5s ease-in forwards;
 }
-
-
-@keyframes grow {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-
-.notification.hide {
-    animation: shrink 0.3s ease-out forwards;
-}
-
-
-@keyframes shrink {
-    to {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-}
-
-.notification strong {
-    font-size: 12px;
-    line-height: 20px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
 
 .message-dismiss {
   margin-left: auto;

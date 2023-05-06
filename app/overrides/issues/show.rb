@@ -9,7 +9,7 @@ Deface::Override.new(:virtual_path => 'issues/show',
 
 <%= stylesheet_link_tag 'my_styles', plugin: 'redmine_rt' %>
 
-<div id='message-container'></div>
+<div id='message-container' class='message-container'></div>
 
 """
 end

@@ -4,36 +4,58 @@
   const adjustMessage = ($message) => {
     $message.find('.journal-actions, .journal-link').remove();
     $message.find("h4").contents().unwrap();
+
+    // Allow at most XXX chars
+    const LIMIT = 256
+    var wikiChild = $message.find('.wiki');
+    var wikiText = wikiChild.text();
+    if(wikiText.length > LIMIT) {
+      var croppedText = wikiText.substr(0, LIMIT);
+      wikiChild.text(croppedText + " ...");
+    }
+  }
+
+  const fromLoggedInUser = ($message) => {
+    const author = $message.find('.user.active').attr('href')
+
+    const logged_in = $('#loggedas').find('.user').attr('href')
+    console.log("author_href:", author, "logged_in_href:", logged_in)
+    return author == logged_in
   }
 
   const showMessage = (message) => {
-    var $messageContainer = $(`<div class='message-container'></div>`);
-    var $message = $(`<div class='message'>${message}<span class='message-dismiss'>&times;</span></div>`);
+    var $messageContainer = $('#message-container');
+    var $message = $(`<div class='message'>${message}<span class='message-dismiss'><b>&times;</b></span></div>`)
     adjustMessage($message)
+
+    if(fromLoggedInUser($message)) {
+      console.log(`Message from self. Ignoring.`)
+      return
+    }
 
     console.log("message", $message.html())
 
     $message.appendTo($messageContainer);
-    $messageContainer.appendTo('body');
-    $message.hide().fadeIn(1000);
+    //$messageContainer.appendTo('body');
+    //$messageContainer.append('body');
+    $message.hide().slideDown(800, () => {
+      console.log("animate grow complete")
+    })
+
+    var removeMessage = ($message) => {
+      $message.slideUp(800, function() {
+        console.log("removing message")
+        $message.remove();
+      });
+    }
 
     var timeout = setTimeout(function() {
-      $message.fadeOut(function() {
-        $message.remove();
-        if ($('.message').length == 0) {
-          $messageContainer.remove();
-        }
-      });
+      removeMessage($message)
     }, 30000);
 
-    $('.message-dismiss').click(function() {
+    $message.find('.message-dismiss').click(function() {
       clearTimeout(timeout);
-      $(this).closest('.message').fadeOut(function() {
-        $(this).remove();
-        if ($('.message').length == 0) {
-          $messageContainer.remove();
-        }
-      });
+      removeMessage($message)
     });
   }
 
@@ -182,7 +204,7 @@
   
         var item = $.parseHTML(data);
 
-        //showMessage(data);
+        showMessage(data);
 
         /*
         $(item).find('a').each(function() {

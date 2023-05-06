@@ -2,7 +2,8 @@
   var base_url = "";
 
   const adjustMessage = ($message) => {
-    $message.find('.journal-actions, .journal-link').remove();
+    //$message.find('.journal-actions, .journal-link').remove();
+    $message.find('.journal-actions').remove();
     $message.find("h4").contents().unwrap();
 
     // Allow at most XXX chars

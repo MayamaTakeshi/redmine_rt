@@ -1,3 +1,4 @@
+
 (function() {
   var base_url = "";
 
@@ -256,7 +257,27 @@
     App.ws_setup(function(msg) {
       console.log("got msg");
       console.log(msg);
-      if(msg.type == "journal_deleted") {
+
+      if(msg.type == "issue_saved") {
+        if(typeof REDMINE_ISSUE_DYNAMIC_EDIT !== 'undefined') {
+          REDMINE_ISSUE_DYNAMIC_EDIT.updateIssueDetails()
+        } else {
+          var issue_id = window.location.pathname.split("/issues/")[1].split("?")[0];
+          const url = base_url + "/issues/" + issue_id
+          fetch(url, {
+            method: 'GET',
+            crossDomain: true,
+            })
+            .then(res => res.text())
+            .then(data => {
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(data, 'text/html');
+              document.querySelector('form#issue-form').innerHTML = doc.querySelector('form#issue-form').innerHTML;
+              document.querySelector('#all_attributes').innerHTML = doc.querySelector('#all_attributes').innerHTML;
+              document.querySelector('div.issue.details').innerHTML = doc.querySelector('div.issue.details').innerHTML;
+          })
+        }
+      } else if(msg.type == "journal_deleted") {
         remove(msg.journal_id);
       } else if(msg.type == "journal_saved") {
         var $item = $("#change-" + msg.journal_id);

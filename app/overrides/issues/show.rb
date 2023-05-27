@@ -11,6 +11,8 @@ Deface::Override.new(:virtual_path => 'issues/show',
 
 <div id='message-container' class='message-container'></div>
 
+<%= javascript_tag do %> REDMINE_RT = {}; <% end %>
+
 """
 end
 

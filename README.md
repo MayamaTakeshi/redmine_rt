@@ -1,5 +1,6 @@
 # redmine_rt (Redmine Real-Time plugin)
 
+## Overview 
 This plugin provides:
   - Notification of issue changes (addition, removal, update of journals).
   - API method post_msg to permit to send message to channels
@@ -12,7 +13,7 @@ This plugin works with Redmine 4 and 5 (https://github.com/redmine/redmine).
 
 (tested with 4.1.1, 4.2.2, 4.2.7, 4.2.9, 5.0.0, 5.0.2, 5.0.4 and 5.0.5)
 
-Installation:
+## Installation:
 
 ```
 cd REDMINE_ROOT_FOLDER/plugins
@@ -181,4 +182,18 @@ server {
      proxy_pass http://puma_redmine;
     }
   }
+```
+## Integration with redmine_issue_dynamic_edit
+Redmine_rt integrates nicely with 
+  https://github.com/Ilogeek/redmine_issue_dynamic_edit
+
+Video:
+  https://www.youtube.com/watch?v=XY5YeteGRBk
+  
+However, there are changes required in redmine_issue_dynamic_edit for this to work.
+
+So until our changes are accepted, you should use our specific branch:
+```
+cd plugins
+git clone -b integration_with_redmine_rt https://github.com/MayamaTakeshi/redmine_issue_dynamic_edit
 ```

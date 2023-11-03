@@ -43,7 +43,9 @@ else
 end
 
 Rails.configuration.to_prepare do
-  Redmine::Plugin.find(:redmine_rt).assets_paths << File.expand_path('assets', __dir__)
+  if Rails.version >= '6.0'
+    Redmine::Plugin.find(:redmine_rt).assets_paths << File.expand_path('assets', __dir__)
+  end
 end
 
 Redmine::Plugin.register :redmine_rt do

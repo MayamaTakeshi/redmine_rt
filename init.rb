@@ -23,6 +23,8 @@ end
 
 Rails.application.config.action_cable.disable_request_forgery_protection = true
 
+RedmineRt::IssuesControllerHelper.apply
+
 if Rails.version > '6.0' && Rails.autoloaders.zeitwerk_enabled?
   prepare()
 else
@@ -42,8 +44,6 @@ Rails.configuration.to_prepare do
   if Rails.version >= '6.0'
     Redmine::Plugin.find(:redmine_rt).assets_paths << File.expand_path('assets', __dir__)
   end
-
-  RedmineRt::IssuesControllerHelper.apply
 end
 
 Redmine::Plugin.register :redmine_rt do

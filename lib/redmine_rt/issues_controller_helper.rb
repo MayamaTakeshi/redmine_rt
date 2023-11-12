@@ -1,6 +1,9 @@
 module RedmineRt
-  # Patches Redmine's IssuesController. 
-  module IssuesControllerPatch
+  # Add our helper to IssuesController. 
+  module IssuesControllerHelper
+    def self.apply
+      IssuesController.send :helper, RedmineRt::IssuesControllerHelper
+    end
 
     def issue_history_tabs_for_redmine_rt
       tabs = []
@@ -58,30 +61,6 @@ module RedmineRt
           }
       end
       tabs
-    end
-
-    def self.included(base) # :nodoc:
-      base.send(:include, InstanceMethods)
-      base.class_eval do
-        unloadable # Send unloadable so it will not be unloaded in development
-
-        helper_method :issue_history_tabs_for_redmine_rt
-      end
-
-      base.skip_before_action :authorize, only: [:add_quick_notes]
-    end
-
-    module InstanceMethods
-      def add_quick_notes
-        @issue = Issue.find(params[:id])
-        unless User.current.allowed_to?(:add_issues, @issue.project, :global => true)
-          raise ::Unauthorized
-        end
-
-        return unless update_issue_from_params
-        save_issue_with_child_records
-        render json: "{}"
-      end
     end
   end
 end

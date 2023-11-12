@@ -12,10 +12,6 @@ def prepare()
     Journal.send(:include, RedmineRt::JournalPatch)
   end
 
-  unless IssuesController.included_modules.include? RedmineRt::IssuesControllerPatch
-    IssuesController.send(:include, RedmineRt::IssuesControllerPatch)
-  end
-
   unless JournalsController.included_modules.include? RedmineRt::JournalsControllerPatch
     JournalsController.send(:include, RedmineRt::JournalsControllerPatch)
   end
@@ -46,6 +42,8 @@ Rails.configuration.to_prepare do
   if Rails.version >= '6.0'
     Redmine::Plugin.find(:redmine_rt).assets_paths << File.expand_path('assets', __dir__)
   end
+
+  RedmineRt::IssuesControllerHelper.apply
 end
 
 Redmine::Plugin.register :redmine_rt do

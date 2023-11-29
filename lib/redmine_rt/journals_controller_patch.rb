@@ -31,7 +31,7 @@ module RedmineRt
           end
         end
 
-        @journal.indice = params[:indice]
+        @journal.indice = @journal.indice || @journal.issue.visible_journals_with_index.find{|j| j.id == @journal.id}.indice
 
         if @journal.private_notes
           if @journal.user != User.current and !User.current.allowed_to?(:view_private_notes, @issue.project) 

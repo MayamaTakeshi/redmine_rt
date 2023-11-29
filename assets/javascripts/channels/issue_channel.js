@@ -177,26 +177,7 @@
   
       var existing_item = indice != null ? true : false;
   
-      var last;
-  
-      var $history_children = $history.find("> div");
-      if( sorting == 'desc') {
-        $last = $history_children.last();
-      } else {
-        $last = $history_children.first();
-      }
-  
-      if(!indice) {
-        indice = 1;
-        if($last.length > 0) {
-          var journal_id = $last.find("div[id|='note']").attr("id");
-          if(journal_id) {	
-            indice = parseInt(journal_id.split("-")[1]) + 1;
-          }
-        }
-      }
-  
-      $.get(base_url + "/journals/" + id + "?indice=" + indice, function( data, statusText, jqXHR ) {
+      $.get(base_url + "/journals/" + id, function( data, statusText, jqXHR ) {
         console.log("GET /journals got statusText=" + statusText);
   
         console.log(lock_version);

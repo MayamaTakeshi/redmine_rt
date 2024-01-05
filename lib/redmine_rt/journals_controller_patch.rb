@@ -23,6 +23,8 @@ module RedmineRt
 
         @journal = Journal.includes([:details]).includes([:user => :email_address]).find(params[:id])
         @issue = Issue.find(@journal.journalized_id)
+        # @project is used in ApplicationHelper::time_tag method
+        @project = @issue.project
 
         user = User.current
         if @journal.private_notes? && @journal.user != user then

@@ -251,11 +251,9 @@
             })
             .then(res => res.text())
             .then(data => {
-              const parser = new DOMParser();
-              const doc = parser.parseFromString(data, 'text/html');
-              document.querySelector('form#issue-form').innerHTML = doc.querySelector('form#issue-form').innerHTML;
-              document.querySelector('#all_attributes').innerHTML = doc.querySelector('#all_attributes').innerHTML;
-              document.querySelector('div.issue.details').innerHTML = doc.querySelector('div.issue.details').innerHTML;
+              $("form#issue-form").replaceWith($("form#issue-form", data));
+              $("#all_attributes").replaceWith($("#all_attributes", data));
+              $("div.issue.details").replaceWith($("div.issue.details", data));
           })
         }
       } else if(msg.type == "journal_deleted") {

@@ -177,16 +177,23 @@
   
       var existing_item = indice != null ? true : false;
   
-      $.get(base_url + "/journals/" + id, function( data, statusText, jqXHR ) {
-        console.log("GET /journals got statusText=" + statusText);
+      var url = base_url + "/journals/" + id
+
+      console.log(`GET ${url}`)
+      $.get(url, function( data, statusText, jqXHR ) {
+        console.log(`GET ${url} got statusText=${statusText}`);
   
-        console.log(lock_version);
-        var lock_version = jqXHR.getResponseHeader("X-issue-lock-version");
-  
-        $("#issue_lock_version").attr("value", lock_version);
-  
+        //console.log(`GET ${url} data:`)
+        //console.log(data)
         var item = $.parseHTML(data);
 
+        if (!$(item).hasClass('has-details')) {
+            var lock_version = jqXHR.getResponseHeader("X-issue-lock-version");
+            console.log(`new lock_version=${lock_version}`);
+      
+            $("#issue_lock_version").attr("value", lock_version);
+        }
+      
         showMessage(data);
 
         if(existing_item) {
@@ -251,8 +258,8 @@
             })
             .then(res => res.text())
             .then(data => {
-              $("form#issue-form").replaceWith($("form#issue-form", data));
-              $("#all_attributes").replaceWith($("#all_attributes", data));
+              //$("form#issue-form").replaceWith($("form#issue-form", data));
+              //$("#all_attributes").replaceWith($("#all_attributes", data));
               $("div.issue.details").replaceWith($("div.issue.details", data));
           })
         }

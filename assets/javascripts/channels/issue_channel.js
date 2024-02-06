@@ -270,7 +270,7 @@
         if($item.length == 0) {
           console.log("element " + msg.journal_id + " absent. Adding it")
           add_or_update_note(msg.journal_id); 
-          $("#last_journal_id").attr("value", msg.journal_id);
+          //$("#last_journal_id").attr("value", msg.journal_id);
         } else {
           console.log("element already exists");
           var indice = $item.find("div[id|='note']").attr("id").split("-")[1];

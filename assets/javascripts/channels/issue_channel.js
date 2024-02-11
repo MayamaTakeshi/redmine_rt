@@ -1,6 +1,7 @@
 
 (function() {
   var base_url = "";
+  let outdated = false;
 
   const adjustMessage = ($message) => {
     //$message.find('.journal-actions, .journal-link').remove();
@@ -187,11 +188,15 @@
         //console.log(data)
         var item = $.parseHTML(data);
 
-        if (!$(item).hasClass('has-details')) {
+        if (!outdated) {
+          if(!$(item).hasClass('has-details')) {
             var lock_version = jqXHR.getResponseHeader("X-issue-lock-version");
             console.log(`new lock_version=${lock_version}`);
       
             $("#issue_lock_version").attr("value", lock_version);
+          } else {
+            outdated = true;
+          }
         }
       
         showMessage(data);

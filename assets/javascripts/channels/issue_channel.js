@@ -2,6 +2,7 @@
 (function() {
   var base_url = "";
   let outdated = false;
+  let savedAllAttributes = {}
 
   const adjustMessage = ($message) => {
     //$message.find('.journal-actions, .journal-link').remove();
@@ -62,10 +63,85 @@
     });
   }
 
+  const backUpAllAttributes = () => {
+    $("#all_attributes")
+      .find("select, input, textarea")
+      .filter((_, e) => $(e).attr("id") !== undefined)
+      .each((_, e) => {
+        savedAllAttributes[$(e).attr("id")] = $(e).val();
+      });
+  };
+
+  const updateAllAttributes = (newAllAttributes) => {
+    let conflict = false;
+    $("#all_attributes")
+      .find("select, input, textarea")
+      .filter((_, e) => $(e).attr("id") !== undefined)
+      .each((_, e) => {
+        const id = $(e).attr("id");
+        const $newAttribute = $(newAllAttributes).find("#" + id);
+        const newValue = $newAttribute.val();
+        const currentValue = $(e).val();
+        let allowOverwrite = true;
+
+        if (!(id in savedAllAttributes)) {
+          conflict = true;
+        } else if (newValue === undefined) {
+          // Current form has no attributes
+          conflict = true;
+        } else {
+          if (savedAllAttributes[id] === newValue) return;
+          if (savedAllAttributes[id] !== currentValue) {
+            const label = $("label[for=" + id + "]").text() || id;
+            
+            const currentValueDisplayText =
+              $(e).prop("nodeName") !== "SELECT"
+                ? currentValue
+                : $(e).find(`option[value=${currentValue}]`).text();
+            const newValueDisplayText =
+              $newAttribute.prop("nodeName") !== "SELECT"
+                ? newValue
+                : $newAttribute.find(`option[value=${newValue}]`).text();
+
+            if (
+              $(e).prop("nodeName") === "SELECT" &&
+              $newAttribute.prop("nodeName") === "SELECT" &&
+              $(e).find(`option[value=${newValue}]`).length === 0
+            ) {
+              // Update select node options
+              $(e).empty().append($newAttribute.children().clone());
+              // Restore current value
+              $(e).val(currentValue);
+            }
+
+            // Confirm overwrite
+            // TODO: Support for i18n
+            allowOverwrite = confirm(
+              "Are you sure you want to overwrite the following?\n\n" +
+                `${label}: ${currentValueDisplayText} -> ${newValueDisplayText}`
+            );
+          }
+
+          if (allowOverwrite) {
+            // update value
+            $(e).val(newValue);
+            savedAllAttributes[id] = newValue;
+          } else {
+            conflict = true;
+          }
+        }
+      });
+
+    return !conflict;
+  };
+
   $(window).on('load', function() {
       if(window.location.pathname.indexOf("/issues/") >= 0) {
         base_url = window.location.href.split("/issues/")[0];
       }
+      
+      backUpAllAttributes();
+      $("#issue-form").on("submit", backUpAllAttributes);
       
       $('#quick_notes_ta').each(function () {
         this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
@@ -194,8 +270,6 @@
             console.log(`new lock_version=${lock_version}`);
       
             $("#issue_lock_version").attr("value", lock_version);
-          } else {
-            outdated = true;
           }
         }
       
@@ -266,6 +340,14 @@
               //$("form#issue-form").replaceWith($("form#issue-form", data));
               //$("#all_attributes").replaceWith($("#all_attributes", data));
               $("div.issue.details").replaceWith($("div.issue.details", data));
+              if (!outdated) {
+                if(updateAllAttributes($("#all_attributes", data))) {
+                  // Update issue_lock_version
+                  $("#issue_lock_version").val($("#issue_lock_version", data).val());
+                } else {
+                  outdated = true;
+                }
+              }
           })
         }
       } else if(msg.type == "journal_deleted") {

@@ -363,7 +363,29 @@
           var indice = $item.find("div[id|='note']").attr("id").split("-")[1];
           add_or_update_note(msg.journal_id, indice); 
         }
-      } else if(msg.event == "error") {
+      } else if ( msg.type === "issue_relation_saved" || msg.type === "issue_relation_deleted" ) {
+        setTimeout(
+          () => {
+            if (
+              ($(`#relation-${msg.id}`).length === 0 && msg.type === "issue_relation_saved") ||
+              ($(`#relation-${msg.id}`).length > 0 && msg.type === "issue_relation_deleted")
+            ) {
+              const issue_id = window.location.pathname.split("/issues/")[1].split("?")[0];
+              const url = base_url + "/issues/" + issue_id;
+              fetch(url, {
+                method: "GET",
+                crossDomain: true,
+              })
+                .then((res) => res.text())
+                .then((data) => {
+                  console.log("update issue relations");
+                  $("#relations").html($("#relations", data).children());
+                });
+            }
+          },
+          1000 // Delay time to ignore duplicate updates by self
+        );
+      } else if (msg.event == "error") {
         App.show_modal("#unauthorized_message");
         App.ws_disconnect();
       }

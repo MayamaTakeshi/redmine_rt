@@ -8,19 +8,15 @@ module RedmineRt
     end
 
     def handle_issue_relation_after_save
-      Broadcaster.broadcast "issue:#{self.issue_from_id}", 
-        { event: 'issue ' + self.issue_from_id.to_s +  ' relation_saved', type: 'issue_relation_saved', other_issue_id: self.issue_to_id }
-
-      Broadcaster.broadcast "issue:#{self.issue_to_id}", 
-        { event: 'issue ' + self.issue_to_id.to_s +  ' relation_saved', type: 'issue_relation_saved', other_issue_id: self.issue_from_id }
+      evt = { event: 'issue_relation ' + self.id.to_s +  ' saved', type: 'issue_relation_saved', id: self.id, issue_from_id: self.issue_from_id, issue_to_id: self.issue_to_id }
+      Broadcaster.broadcast "issue:#{self.issue_from_id}", evt
+      Broadcaster.broadcast "issue:#{self.issue_to_id}",  evt
     end
 
     def handle_issue_relation_after_destroy
-      Broadcaster.broadcast "issue:#{self.issue_from_id}",
-        { event: 'issue ' + self.issue_from_id.to_s +  ' relation_deleted', type: 'issue_relation_deleted', other_issue_id: self.issue_to_id }
-
-      Broadcaster.broadcast "issue:#{self.issue_to_id}",
-        { event: 'issue ' + self.issue_to_id.to_s +  ' relation_deleted', type: 'issue_relation_deleted', other_issue_id: self.issue_from_id }
+      evt = { event: 'issue_relation ' + self.id.to_s +  ' deleted', type: 'issue_relation_deleted', id: self.id, issue_from_id: self.issue_from_id, issue_to_id: self.issue_to_id }
+      Broadcaster.broadcast "issue:#{self.issue_from_id}", evt
+      Broadcaster.broadcast "issue:#{self.issue_to_id}", evt
     end
   end
 end 

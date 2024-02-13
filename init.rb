@@ -8,6 +8,10 @@ def prepare()
     Issue.send(:include, RedmineRt::IssuePatch)
   end
 
+  unless IssueRelation.included_modules.include? RedmineRt::IssueRelationPatch
+    IssueRelation.send(:include, RedmineRt::IssueRelationPatch)
+  end
+
   unless Journal.included_modules.include? RedmineRt::JournalPatch
     Journal.send(:include, RedmineRt::JournalPatch)
   end

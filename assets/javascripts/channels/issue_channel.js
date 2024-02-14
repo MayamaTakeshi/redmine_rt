@@ -66,7 +66,7 @@
   const backUpAllAttributes = () => {
     $("#all_attributes")
       .find("select, input, textarea")
-      .filter((_, e) => $(e).attr("id") !== undefined)
+      .filter((_, e) => $(e).attr("id") !== undefined && $(e).attr("id") !== "")
       .each((_, e) => {
         savedAllAttributes[$(e).attr("id")] = $(e).val();
       });
@@ -76,7 +76,7 @@
     let conflict = false;
     $("#all_attributes")
       .find("select, input, textarea")
-      .filter((_, e) => $(e).attr("id") !== undefined)
+      .filter((_, e) => $(e).attr("id") !== undefined && $(e).attr("id") !== "")
       .each((_, e) => {
         const id = $(e).attr("id");
         const $newAttribute = $(newAllAttributes).find("#" + id);

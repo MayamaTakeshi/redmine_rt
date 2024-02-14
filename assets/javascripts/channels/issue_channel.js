@@ -90,23 +90,36 @@
           // Current form has no attributes
           conflict = true;
         } else {
-          if (savedAllAttributes[id] === newValue) return;
-          if (savedAllAttributes[id] !== currentValue) {
+          if (String(savedAllAttributes[id]) === String(newValue)) return;
+          if (String(savedAllAttributes[id]) !== String(currentValue)) {
             const label = $("label[for=" + id + "]").text() || id;
             
-            const currentValueDisplayText =
-              $(e).prop("nodeName") !== "SELECT"
-                ? currentValue
-                : $(e).find(`option[value=${currentValue}]`).text();
-            const newValueDisplayText =
-              $newAttribute.prop("nodeName") !== "SELECT"
-                ? newValue
-                : $newAttribute.find(`option[value=${newValue}]`).text();
+            const currentValueDisplayText = (() => {
+              if ($(e).prop("nodeName") === "SELECT") {
+                if (currentValue.length > 0) {
+                  return $(e).find(`option[value=${currentValue}]`).text();
+                } else {
+                  return "<empty>"
+                }
+              } else {
+                return String(currentValue);
+              }
+            })();
+            const newValueDisplayText = (() => {
+              if ($newAttribute.prop("nodeName") === "SELECT") {
+                if (newValue.length > 0) {
+                  return $(e).find(`option[value=${newValue}]`).text();
+                } else {
+                  return "<empty>"
+                }
+              } else {
+                return String(newValue);
+              }
+            })();
 
             if (
               $(e).prop("nodeName") === "SELECT" &&
-              $newAttribute.prop("nodeName") === "SELECT" &&
-              $(e).find(`option[value=${newValue}]`).length === 0
+              $newAttribute.prop("nodeName") === "SELECT"
             ) {
               // Update select node options
               $(e).empty().append($newAttribute.children().clone());

@@ -269,69 +269,84 @@
   
       var url = base_url + "/journals/" + id
 
-      console.log(`GET ${url}`)
-      $.get(url, function( data, statusText, jqXHR ) {
-        console.log(`GET ${url} got statusText=${statusText}`);
-  
-        //console.log(`GET ${url} data:`)
-        //console.log(data)
-        var item = $.parseHTML(data);
+      let tryCount = 0;
+      const maxRetryCount = 5;
+      const retryInterval = 1000;
 
-        if (!outdated) {
-          if(!$(item).hasClass('has-details')) {
-            var lock_version = jqXHR.getResponseHeader("X-issue-lock-version");
-            console.log(`new lock_version=${lock_version}`);
-      
-            $("#issue_lock_version").attr("value", lock_version);
-          }
-        }
-      
-        showMessage(data);
+      const tryGet = function () {
+        tryCount++;
+        console.log(`GET ${url}`)
+        $.get(url, function( data, statusText, jqXHR ) {
+          console.log(`GET ${url} got statusText=${statusText}`);
+    
+          //console.log(`GET ${url} data:`)
+          //console.log(data)
+          var item = $.parseHTML(data);
 
-        if(existing_item) {
-          console.log("existing item");
-          $("#note-" + indice).parent().replaceWith(item);
-        } else {
-          console.log("new item");
-          // new item must start as hidden and then we will show it gradually.
-          $(item).css('display', 'none');
-  
-          if( sorting == 'desc') {
-            var container = $("#tab-content-history");
-            if(container) {
-                // redmine 4.2 and newer
-                container.prepend(item);
-            } else {
-                // redmine 4.1 and older
-                $(item).insertBefore($history.find("h3"));
-            }
-          } else {
-            var container = $("#tab-content-history");
-            if(container) {
-                // redmine 4.2 and newer
-                container.append(item);
-            } else {
-                // redmine 4.1 and older
-                $(item).insertAfter($history.find("h3"));
+          if (!outdated) {
+            if(!$(item).hasClass('has-details')) {
+              var lock_version = jqXHR.getResponseHeader("X-issue-lock-version");
+              console.log(`new lock_version=${lock_version}`);
+        
+              $("#issue_lock_version").attr("value", lock_version);
             }
           }
+        
+          showMessage(data);
 
-          var selectedTabId = $("#history .tabs ul li a.selected").attr("id");
-          console.log("selectedTabId", selectedTabId);
-          if(item_is_visible(selectedTabId, item)) {
-            console.log("new item is visible");
-            //show new item gradually
-            $(item).show(800);
+          if(existing_item) {
+            console.log("existing item");
+            $("#note-" + indice).parent().replaceWith(item);
           } else {
-            console.log("new item is not visible");
+            console.log("new item");
+            // new item must start as hidden and then we will show it gradually.
+            $(item).css('display', 'none');
+    
+            if( sorting == 'desc') {
+              var container = $("#tab-content-history");
+              if(container) {
+                  // redmine 4.2 and newer
+                  container.prepend(item);
+              } else {
+                  // redmine 4.1 and older
+                  $(item).insertBefore($history.find("h3"));
+              }
+            } else {
+              var container = $("#tab-content-history");
+              if(container) {
+                  // redmine 4.2 and newer
+                  container.append(item);
+              } else {
+                  // redmine 4.1 and older
+                  $(item).insertAfter($history.find("h3"));
+              }
+            }
+
+            var selectedTabId = $("#history .tabs ul li a.selected").attr("id");
+            console.log("selectedTabId", selectedTabId);
+            if(item_is_visible(selectedTabId, item)) {
+              console.log("new item is visible");
+              //show new item gradually
+              $(item).show(800);
+            } else {
+              console.log("new item is not visible");
+            }
           }
-        }
-      }).fail(function(jqXHR, error, reason) {
-        console.log(error)
-        if(reason == "Unauthorized") {
-          App.show_modal("#unauthorized_message");
-        }
-     });
+        }).fail(function(jqXHR, error, reason) {
+          console.log(`${error} (try count: ${tryCount})`);
+          if(reason == "Unauthorized") {
+            App.show_modal("#unauthorized_message");
+            return;
+          } else if (reason === "Not Found") {
+            if(tryCount >= maxRetryCount) {
+              console.error(`Tried ${tryCount} times but failed.`); 
+              return;
+            }
+            setTimeout(tryGet, retryInterval);
+          }
+        });
+      }
+      tryGet();
     };
 
     App.ws_setup(function(msg) {

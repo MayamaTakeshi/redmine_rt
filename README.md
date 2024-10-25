@@ -11,7 +11,7 @@ It uses Ruby on Rails Action Cable to permit realtime notification of events (an
 
 This plugin works with Redmine 4 and 5 (https://github.com/redmine/redmine).
 
-(tested with 4.1.1, 4.2.2, 4.2.7, 4.2.9, 5.0.0, 5.0.2, 5.0.4 and 5.0.5)
+(tested with 4.1.1, 4.2.2, 4.2.7, 4.2.9, 5.0.0, 5.0.2, 5.0.4, 5.0.5 and 5.1.3)
 
 ## Installation:
 

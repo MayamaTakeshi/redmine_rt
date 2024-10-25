@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'redis', '~> 3.0'
+gem 'redis', '~> 4.0'
 
 gem 'coffee-rails'
 

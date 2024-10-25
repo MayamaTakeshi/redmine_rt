@@ -1,6 +1,4 @@
 class QuickNotesController < ApplicationController
-  unloadable
-
   before_action :require_login
 
   def add_quick_notes

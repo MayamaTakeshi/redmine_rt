@@ -8,8 +8,6 @@ module RedmineRt
       base.send(:include, InstanceMethods)
 
       base.class_eval do
-        unloadable # Send unloadable so it will not be unloaded in development
-
         accept_api_auth :destroy
       end
 

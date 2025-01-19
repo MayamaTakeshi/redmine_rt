@@ -9,9 +9,9 @@ This plugin provides:
 
 It uses Ruby on Rails Action Cable to permit realtime notification of events (and for this, you need to have a redis-server installed somewhere).
 
-This plugin works with Redmine 4 and 5 (https://github.com/redmine/redmine).
+This plugin works with Redmine 4, 5 and 6 (https://github.com/redmine/redmine).
 
-(tested with 4.1.1, 4.2.2, 4.2.7, 4.2.9, 5.0.0, 5.0.2, 5.0.4, 5.0.5 and 5.1.3)
+(tested with 4.1.1, 4.2.2, 4.2.7, 4.2.9, 5.0.0, 5.0.2, 5.0.4, 5.0.5, 5.1.3 and commit 0dcc20ee)
 
 ## Installation:
 
@@ -60,7 +60,7 @@ For Redmine 4:
 bundle exec rails server puma -e production -b 0.0.0.0
 ```
 
-For Redmine 5:
+For Redmine 5 and 6:
 ```
 bundle exec rails server -e production -b 0.0.0.0
 ```
